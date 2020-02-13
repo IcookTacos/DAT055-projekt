@@ -18,7 +18,7 @@ public interface GuiInterface {
 	//Methods for buttons
 	public void disconnect();
 	public void setAutoScroll();
-	public void logInClicked();
+	//public void logInClicked();
 	public void sendMsgClicked();
 	
 

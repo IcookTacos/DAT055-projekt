@@ -13,25 +13,21 @@ public class Client implements ClientInterface{
 	public static boolean connected = false;
 	private static DataOutputStream dos = null;
 	private static DataInputStream dis = null;
+	
 	// SCOKET
 	public static Socket s = null;
 
 
 	public Client(){
-
-		new Client_GUI();	
 		
-		
+		new Client_GUI();
 		System.out.println("Client is running!");
-
-
-
-
 
 		//Listening to server
 		while(true)
 		{
 			if(connected) {
+				System.out.println("Connected=" + connected);
 				break;
 			}
 			try {
@@ -40,10 +36,13 @@ public class Client implements ClientInterface{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			System.out.println("ERROR VI ÄR FAST \n");
 
 		}
 
 		//Connected to server
+		Thread th = new Thread(() -> {
+		
 		while(true)
 		{
 			System.out.println("Listening started!");
@@ -69,6 +68,8 @@ public class Client implements ClientInterface{
 			}
 
 		}
+	});
+		th.start();
 	}
 
 	public static void logIn(String ip, int portNumber, String userName) {
