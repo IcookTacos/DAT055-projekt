@@ -6,3 +6,5 @@ JadajadaClient v0.0 <- Erik
 JadajadaServer v0.0 <- Axel
 
 JadajadaClient v1.1 <- Axel
+
+JadaJadaClient v1.2 <- Erik
