@@ -1,8 +1,8 @@
 # DAT055-projekt
 Projektarbete i kursen DAT055 
 
-JadajadaClient v1.1 <- Axel
+JadajadaClient v0.0 <- Erik
 
 JadajadaServer v0.0 <- Axel
 
-All gui i client <- Erik
+JadajadaClient v1.1 <- Axel
