@@ -2,8 +2,9 @@
 Projektarbete i kursen DAT055 
 
 # NAMN OCH VERSION (LÄS INNAN DU GÖR EN BRANCH ELLER PULL REQUEST)
-**Klient:** JadaJada-Client-v1.x      ( x = version )
-**Server:** JadaJada-Server-v1.x      ( x = version )
+- **Klient:** JadaJada-Client-v1.x      ( x = version )
+
+- **Server:** JadaJada-Server-v1.x      ( x = version )
 
 # TODO (14 Februari 2020)
 - [ ] Veckorapport för Tisdag (18e Februari)
