@@ -2,13 +2,15 @@
 Projektarbete i kursen DAT055 
 
 # TODO (14 Februari 2020)
-- UML & sekvens diagram
-- Städa upp koden
-    * Kommentera
-    * Separera all funktionallitet och GUI
-    * Göra snyggt
-    * Göra mer läsbart
-    * Skapa enhetliga variabelnamn och metoder
+- [ ] Veckorapport för Tisdag (18e Februari)
+- [ ] Påbörja rapport / Inlämning (Kolla Canvas vad som står som krav)
+- [ ] UML diagram
+- [ ] Sekvens diagram
+- [ ] Kommentera koden
+- [ ] Separera all funktionallitet och GUI
+- [ ] Göra snyggt
+- [ ] Göra mer läsbart
+- [ ] Skapa enhetliga variabelnamn och metoder
 
 ## JadajadaClient v0.0 <- Erik
 - Basversion av client
