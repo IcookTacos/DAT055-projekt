@@ -56,6 +56,11 @@ public class Server implements ServerInterface{
 	
 	
 
+	public static void main(String args[] )	{
+		new Server();
+		
+	
+	}
 
 	@Override
 	public void run() {
@@ -101,6 +106,8 @@ public class Server implements ServerInterface{
 		return null;
 
 	}
+
+
 
 
 
