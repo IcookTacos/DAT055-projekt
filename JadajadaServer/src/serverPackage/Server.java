@@ -56,10 +56,6 @@ public class Server implements ServerInterface{
 	
 	
 
-	public static void main(String args[] )	{
-		new Server();
-	
-	}
 
 	@Override
 	public void run() {
@@ -106,32 +102,6 @@ public class Server implements ServerInterface{
 
 	}
 
-
-	public static void serverStart() {
-		/*
-		Thread th = new Thread(() -> {
-			ServerGUI server = new ServerGUI();
-
-		});
-
-		th.start();
-		 */
-
-
-
-
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-
-					new Gui();
-
-				} catch (Exception e) {
-
-				}
-			}
-		});
-	} 
 
 
 

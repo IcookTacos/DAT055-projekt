@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import serverPackage.*;
@@ -11,12 +13,11 @@ import serverPackage.*;
 
 
 
-public class ClientHandler extends Thread{
+public class ClientHandler extends Thread implements HandlerInterface{
 
 	private DataInputStream dis = null;
-	private static ArrayList<Socket> users = null;
-	private String[] serverlog;
-	private static int logtracker = 0;
+	private static ArrayList<Socket> users;
+	private static ArrayList<String> serverlog = new ArrayList<String>();
 
 
 	public ClientHandler(Socket clientSocket)
@@ -38,6 +39,7 @@ public class ClientHandler extends Thread{
 		try
 		{
 			dis = new DataInputStream(clientSocket.getInputStream());
+
 		}
 		catch(Exception e)
 		{
@@ -45,31 +47,24 @@ public class ClientHandler extends Thread{
 		}
 
 		Gui.addTextToServerLog("Trying to add a new client!");
-		/*
-    try {
-        Thread.sleep(500);
-    } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    }
-		 */ 
 		Gui.addTextToServerLog("Client added!"); 
 	}
 
 	public void tellEveryone(String message, String name)
 	{
+		SimpleDateFormat sdf = new SimpleDateFormat("HH.mm");
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		
-		
-		
+		serverlog.add(sdf.format(timestamp) + name + " " + message);
 		for (Socket socket : users) {
 			Socket s = socket;
-
+			
 			try {
 				DataOutputStream dos = new DataOutputStream(s.getOutputStream());
-				dos.writeUTF(name + " " + message);
-
-				dos.flush();
+				dos.writeUTF(sdf.format(timestamp) + name + " " + message);
 				
+				dos.flush();
+
 				//serverlog[logtracker]=(message + name);
 				//logtracker++;
 			} catch (IOException e1) {
@@ -77,6 +72,7 @@ public class ClientHandler extends Thread{
 				e1.printStackTrace();
 			}
 		}
+		
 	}
 
 
@@ -103,20 +99,21 @@ public class ClientHandler extends Thread{
 
 				if(line!=null)
 				{
-					
+
 					String name = "";
 					if(line.startsWith("----New client: "))
 					{
 						name = line.replaceFirst("----New client: ", "");
+						sendMsgHistory();
 						tellEveryone("has joined room!", name);
-						Gui.addTextToServerLog(name + " has joined room!");  //Skriver till server log
 						
+
 					}
 					else
 					{
-						
+
 						tellEveryone(line, name);
-						System.err.println("Tell Everyone!");
+						//System.err.println("Tell Everyone!");
 						//Server.addTextToServerLog(line);
 					}
 
@@ -129,6 +126,27 @@ public class ClientHandler extends Thread{
 
 		}
 
+
+
+	}
+
+	public void sendMsgHistory() {
+
+		Socket index = users.get(users.size() - 1);
+
+		for (String s1 : serverlog) {
+
+			try {
+				DataOutputStream dos = new DataOutputStream(index.getOutputStream());
+				dos.writeUTF(s1);
+				dos.flush();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+
+		}
 
 
 	}
