@@ -32,7 +32,7 @@ Projektarbete i kursen DAT055
 - Gjort metoder till Lamda actionlisteners 
 - Städat i Gui koden. Implementerat interface till både Client & Gui
 
-## JadaJadaClient v2 <- Erik
+## JadaJadaClient v1.2 <- Erik
 - ADDED: loginscreen, threaded client class
 - Main is not configured for launch. Change before starting java aplication
 
