@@ -30,3 +30,8 @@ Projektarbete i kursen DAT055
 ## JadaJadaServer v1.0 <- Axel
 - Städat lite kod i client-handler
 - kickar nu meddelande historik till alla som loggar in.
+
+## JadaJadaClient v1.4 <- Axel
+- Skapat en metod som skapar olika teman
+- Gjort ett tibia tema
+- Implementerat tema combobox i login gui
