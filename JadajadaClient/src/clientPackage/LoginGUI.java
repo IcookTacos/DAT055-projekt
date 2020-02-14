@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+
+
 @SuppressWarnings("serial")
 
 public class LoginGUI extends JFrame {
@@ -33,10 +35,12 @@ public class LoginGUI extends JFrame {
 	private JButton login;
 
 	// STRING
-	private String[] colors = {"Red","Blue","Magenta","Yellow"};
+	public static String[] colors = {"Default","Tibia","WIP","WIP"};
 	public static String user = null;
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 
+	//Color scheme index code
+	public static int colorIndex = 0;
+	
 	// COMBOBOX
 	private JComboBox colorSelect = new JComboBox(colors);
 
@@ -113,7 +117,7 @@ public class LoginGUI extends JFrame {
 		colorSelect.setBounds(185,230,90,20);
 		colorSelect.setSelectedIndex(0);
 		colorSelect.setBackground(Color.LIGHT_GRAY);
-		//add(colorSelect);
+		add(colorSelect);
 
 		// Decorations
 		getContentPane().add(new DrawingComponent());
@@ -126,20 +130,24 @@ public class LoginGUI extends JFrame {
 
 	public void logInClicked() {
 
+		
 		Client.connected = true;
 		String ip = tf_ip.getText();
 		int port = Integer.parseInt(tf_port.getText());
 		user = nameField.getText();
+		colorIndex = storeColor();
 		JOptionPane.showMessageDialog(null,"Welcome " + user,"Logged In!",JOptionPane.INFORMATION_MESSAGE);
 		Client.logIn(ip, port, user);
 		dispose();
 		new Client();
 
-		//ta_chat.append("Connected!");
-		//ta_chat.append("s=" + "\n");  // Skrivs till chatten [Socket-Information]
+		
 
 	}
 
+	public int storeColor() {
+		return colorSelect.getSelectedIndex();	
+	}
 
 
 }
