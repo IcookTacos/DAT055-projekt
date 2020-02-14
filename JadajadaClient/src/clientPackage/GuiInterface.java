@@ -20,6 +20,7 @@ public interface GuiInterface {
 	public void setAutoScroll();
 	//public void logInClicked();
 	public void sendMsgClicked();
+	void scrollingLabel();
 	
 
 }

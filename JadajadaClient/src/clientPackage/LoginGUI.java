@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
@@ -20,7 +21,7 @@ public class LoginGUI extends JFrame {
 	private JLabel enterName;
 	private JLabel lblIp;
 	private JLabel lblPort;
-	//private JLabel lblName;
+	
 
 	// TEXTFIELD
 	public JTextField nameField;
@@ -33,7 +34,7 @@ public class LoginGUI extends JFrame {
 
 	// STRING
 	private String[] colors = {"Red","Blue","Magenta","Yellow"};
-	public String user = null;
+	public static String user = null;
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 
 	// COMBOBOX
@@ -54,22 +55,22 @@ public class LoginGUI extends JFrame {
 		// Main title (Welcome)
 		maintitle = new JLabel("Welcome to Jada!");
 		maintitle.setFont(new Font(Font.DIALOG,Font.BOLD,23));
-		maintitle.setBounds(60,60,200,20);
+		maintitle.setBounds(40,70,200,20);
 		add(maintitle);
 
 		// Under title 
 		undertitle = new JLabel("Messanger application in DAT055 ");
 		undertitle.setFont(new Font(Font.DIALOG,Font.ITALIC,12));
-		undertitle.setBounds(60,80,300,20);
+		undertitle.setBounds(40,88,300,20);
 		add(undertitle);
 
-		// User-name text field (Text field)
+		// USERNAME TEXTFIELD
 		nameField = new JTextField("");
 		nameField.setBounds(90,150,90,20);
-		//nameField.addActionListener(e -> loginClick());
+		nameField.addActionListener(e -> logInClicked());
 		add(nameField);
 
-		// Enter name label (Enter name)
+		// USERNAME LABEL
 		enterName = new JLabel("USERNAME:");
 		enterName.setFont(new Font(Font.DIALOG,Font.PLAIN,10));
 		enterName.setBounds(18,150,120,20);
@@ -112,7 +113,7 @@ public class LoginGUI extends JFrame {
 		colorSelect.setBounds(185,230,90,20);
 		colorSelect.setSelectedIndex(0);
 		colorSelect.setBackground(Color.LIGHT_GRAY);
-		add(colorSelect);
+		//add(colorSelect);
 
 		// Decorations
 		getContentPane().add(new DrawingComponent());
@@ -129,6 +130,7 @@ public class LoginGUI extends JFrame {
 		String ip = tf_ip.getText();
 		int port = Integer.parseInt(tf_port.getText());
 		user = nameField.getText();
+		JOptionPane.showMessageDialog(null,"Welcome " + user,"Logged In!",JOptionPane.INFORMATION_MESSAGE);
 		Client.logIn(ip, port, user);
 		dispose();
 		new Client();

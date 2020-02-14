@@ -4,9 +4,9 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		//new LoginGUI();
+		new LoginGUI();
 		//new Client();
-		new Client_GUI();		
+		//new Client_GUI();		
 
 	}
 
