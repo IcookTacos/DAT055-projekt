@@ -35,3 +35,11 @@ Projektarbete i kursen DAT055
 - Skapat en metod som skapar olika teman
 - Gjort ett tibia tema
 - Implementerat tema combobox i login gui
+
+## JadaJadaServer v1.1 <- Erik
+- Created new server GUI
+- General hotfixes
+- Cleaned upp code
+- Interfaced further
+
+
