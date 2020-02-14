@@ -12,8 +12,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
-
-
+import javax.swing.plaf.ColorUIResource;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 
 public class Client_GUI extends JFrame implements GuiInterface {
 
@@ -39,6 +39,9 @@ public class Client_GUI extends JFrame implements GuiInterface {
 	public JLabel lblName;		
 	public JLabel titleLabel;
 	public JLabel jadaLabel;
+	public JLabel jada2Label;
+	private JLabel scrollingOn;
+	private JLabel scrollingOff;
 
 	// SCROLLPANE 
 	public JScrollPane scrollPane;
@@ -46,7 +49,7 @@ public class Client_GUI extends JFrame implements GuiInterface {
 	// STRING
 	public String userName;
 	public String received = null;
-	public String user = null;		//	MOVED
+
 
 	// INT, BOOLEAN, ETC
 	Border blackline = BorderFactory.createLineBorder(Color.BLACK);
@@ -55,6 +58,10 @@ public class Client_GUI extends JFrame implements GuiInterface {
 	Font f1 = new Font(Font.DIALOG,Font.PLAIN,9);
 	Font f2 = new Font(Font.DIALOG,Font.PLAIN,25);
 	Font f3 = new Font(Font.DIALOG,Font.BOLD|Font.ITALIC,40);
+
+	//PLACEHOLDER
+
+
 
 
 
@@ -65,6 +72,7 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		createTxtArea();
 		createTxtFields();
 		createActionListerners();
+		setColorScheme(LoginGUI.colorIndex);
 		setVisible(true);
 	}
 
@@ -88,7 +96,7 @@ public class Client_GUI extends JFrame implements GuiInterface {
 	@Override
 	public void createMainWindow() {
 		// MAIN WINDOW CONFIGURATION
-		setTitle("Client");
+		setTitle("JadaJada Messenger");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(645,480);
 		setLocationRelativeTo(null);
@@ -103,27 +111,28 @@ public class Client_GUI extends JFrame implements GuiInterface {
 	@Override
 	public void createClientName() {
 		// MAIN TITLE
-		
+
 		jadaLabel = new JLabel("J");
 		jadaLabel.setForeground(Color.RED);
 		jadaLabel.setBounds(20,20,50,50);
-		jadaLabel.setBorder(outline);
+		//jadaLabel.setBorder(outline);
 		jadaLabel.setFont(f3);
+
 		
-		titleLabel = new JLabel("  ada Jada");
+		jada2Label = new JLabel("J");
+		jada2Label.setForeground(Color.RED);
+		jada2Label.setBounds(83,20,50,50);
+		//jadaLabel.setBorder(outline);
+		jada2Label.setFont(f3);
+		
+		titleLabel = new JLabel("  ada   ada");
 		titleLabel.setBounds(25,35,300,20);
 		titleLabel.setFont(f2);
 
 		
-
-
-		
-
-
-
 		add(titleLabel);
 		add(jadaLabel);
-
+		add(jada2Label);
 
 	}
 
@@ -145,10 +154,10 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		contentPane.add(btnDc);
 
 		// REFRESH BUTTON
-		Refresh = new JButton("Refresh");
+		Refresh = new JButton("Scrolling:");
 		Refresh.setContentAreaFilled(false);
 		Refresh.setFont(f1);
-		Refresh.setBounds(382,380,80,20);
+		Refresh.setBounds(382,380,72,20);
 		contentPane.add(Refresh);
 
 	}
@@ -157,13 +166,31 @@ public class Client_GUI extends JFrame implements GuiInterface {
 	public void createTxtArea() {
 		// SCROLLPANE
 		scrollPane = new JScrollPane();
+		scrollPane.setFont(new Font(Font.DIALOG,Font.BOLD,20));
 		scrollPane.setBounds(39,75,435,300);
 		contentPane.add(scrollPane);
 
-		//TEXTAREA CHATT
+		// TEXTAREA CHATT
 		ta_chat = new JTextArea();
 		scrollPane.setViewportView(ta_chat);
 		ta_chat.setEditable(false);
+
+		// LABEL ON
+		scrollingOn = new JLabel("On");
+		scrollingOn.setFont(new Font(Font.DIALOG,Font.ITALIC,12));
+		scrollingOn.setBounds(460,370,40,40);		
+		add(scrollingOn);
+
+		// LABEL OFF
+		scrollingOff = new JLabel("Off");
+		scrollingOff.setFont(new Font(Font.DIALOG,Font.ITALIC,12));
+		scrollingOff.setBounds(460,370,40,40);
+		add(scrollingOff);
+
+	}
+
+	@Override
+	public void scrollingLabel() {
 
 	}
 
@@ -172,18 +199,25 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		// TEXTFIELD INPUT
 		tf_input = new JTextField();
 		tf_input.setBounds(39,380,258,20);
-		contentPane.add(tf_input);
 		tf_input.setColumns(10);
-
+		tf_input.addActionListener(e->sendMsgClicked());
+		contentPane.add(tf_input);
 
 	}
 	public void setAutoScroll() {
-		if(Client_GUI.autoScroll == 1)
+		if(autoScroll == 1)
 		{
-			Client_GUI.autoScroll = 0;
+			
+			scrollingOff.setVisible(true);
+			scrollingOn.setVisible(false);
+			
+			autoScroll = 0;
 		} else
 		{
-			Client_GUI.autoScroll = 1;
+			
+			scrollingOff.setVisible(false);
+			scrollingOn.setVisible(true);
+			autoScroll = 1;
 		}
 
 	}
@@ -202,7 +236,7 @@ public class Client_GUI extends JFrame implements GuiInterface {
 	@Override
 	public void sendMsgClicked() {
 		String message = tf_input.getText();
-		Client.sendMsg(message, user);
+		Client.sendMsg(message, LoginGUI.user);
 		tf_input.setText(null);
 
 	}
@@ -211,6 +245,89 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		ta_chat.append(messageRecieved + "\n");
 		if(autoScroll == 1) {
 			ta_chat.setCaretPosition(ta_chat.getDocument().getLength());
+		}
+
+	}
+
+
+	@Override
+	public void setColorScheme(int index) {
+		
+	
+		
+		
+		if(index == 1) {
+
+			//WINDOW COLOR
+			contentPane.setBackground(Color.DARK_GRAY);
+			contentPane.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+			//contentPane.setBorder(raisedbevel);
+			
+			//SCROLLPANE COLORS
+			scrollPane.setBackground(Color.DARK_GRAY);
+			scrollPane.setForeground(Color.DARK_GRAY);
+			scrollPane.setBorder(null);
+			scrollPane.getVerticalScrollBar().setBackground(Color.DARK_GRAY);
+			scrollPane.getHorizontalScrollBar().setBackground(Color.DARK_GRAY);
+			scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+			    @Override
+			    protected void configureScrollBarColors() {
+			        this.thumbColor = Color.GRAY;
+			    }
+			});
+			
+			//LOGGO COLOR
+			jadaLabel.setForeground(Color.yellow);
+			jada2Label.setForeground(Color.yellow);
+			titleLabel.setForeground(Color.white);
+
+			//Text area backround color
+			ta_chat.setBackground(Color.GRAY);
+			//Textfield background color
+			tf_input.setBackground(Color.GRAY);
+			
+			//Textarea text color
+			ta_chat.setForeground(Color.yellow);
+			//Textfield text color
+			tf_input.setForeground(Color.yellow);
+
+			
+
+			// Colors around text area & text field
+			ta_chat.setBorder(null);
+			tf_input.setBorder(null);	
+			
+			//if u want color use the examples below			
+			//ta_chat.setBorder(BorderFactory.createLineBorder(Color.yellow));
+			//tf_input.setBorder(BorderFactory.createLineBorder(Color.yellow));
+			
+		
+			
+			
+			//BUTTON COLORS
+
+			// Text color in buttons
+			btnDc.setForeground(Color.white);
+			Refresh.setForeground(Color.white);
+			b_send.setForeground(Color.white);
+			scrollingOff.setForeground(Color.white);
+			scrollingOn.setForeground(Color.white);
+			
+			//If true background color will be added
+			btnDc.setContentAreaFilled(true);
+			Refresh.setContentAreaFilled(true);
+			b_send.setContentAreaFilled(true);
+			
+			
+			// Set background color in buttons
+			btnDc.setBackground(Color.GRAY);
+			Refresh.setBackground(Color.GRAY);
+			b_send.setBackground(Color.GRAY);
+			scrollingOff.setBackground(Color.GRAY);
+			scrollingOn.setBackground(Color.GRAY);
+			
+
+
 		}
 
 	}

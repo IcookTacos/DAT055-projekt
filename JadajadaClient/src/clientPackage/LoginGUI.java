@@ -7,7 +7,10 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+
 
 @SuppressWarnings("serial")
 
@@ -20,7 +23,7 @@ public class LoginGUI extends JFrame {
 	private JLabel enterName;
 	private JLabel lblIp;
 	private JLabel lblPort;
-	//private JLabel lblName;
+	
 
 	// TEXTFIELD
 	public JTextField nameField;
@@ -32,10 +35,12 @@ public class LoginGUI extends JFrame {
 	private JButton login;
 
 	// STRING
-	private String[] colors = {"Red","Blue","Magenta","Yellow"};
-	public String user = null;
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static String[] colors = {"Default","Tibia","WIP","WIP"};
+	public static String user = null;
 
+	//Color scheme index code
+	public static int colorIndex = 0;
+	
 	// COMBOBOX
 	private JComboBox colorSelect = new JComboBox(colors);
 
@@ -54,22 +59,22 @@ public class LoginGUI extends JFrame {
 		// Main title (Welcome)
 		maintitle = new JLabel("Welcome to Jada!");
 		maintitle.setFont(new Font(Font.DIALOG,Font.BOLD,23));
-		maintitle.setBounds(60,60,200,20);
+		maintitle.setBounds(40,70,200,20);
 		add(maintitle);
 
 		// Under title 
 		undertitle = new JLabel("Messanger application in DAT055 ");
 		undertitle.setFont(new Font(Font.DIALOG,Font.ITALIC,12));
-		undertitle.setBounds(60,80,300,20);
+		undertitle.setBounds(40,88,300,20);
 		add(undertitle);
 
-		// User-name text field (Text field)
+		// USERNAME TEXTFIELD
 		nameField = new JTextField("");
 		nameField.setBounds(90,150,90,20);
-		//nameField.addActionListener(e -> loginClick());
+		nameField.addActionListener(e -> logInClicked());
 		add(nameField);
 
-		// Enter name label (Enter name)
+		// USERNAME LABEL
 		enterName = new JLabel("USERNAME:");
 		enterName.setFont(new Font(Font.DIALOG,Font.PLAIN,10));
 		enterName.setBounds(18,150,120,20);
@@ -125,19 +130,24 @@ public class LoginGUI extends JFrame {
 
 	public void logInClicked() {
 
+		
 		Client.connected = true;
 		String ip = tf_ip.getText();
 		int port = Integer.parseInt(tf_port.getText());
 		user = nameField.getText();
+		colorIndex = storeColor();
+		JOptionPane.showMessageDialog(null,"Welcome " + user,"Logged In!",JOptionPane.INFORMATION_MESSAGE);
 		Client.logIn(ip, port, user);
 		dispose();
 		new Client();
 
-		//ta_chat.append("Connected!");
-		//ta_chat.append("s=" + "\n");  // Skrivs till chatten [Socket-Information]
+		
 
 	}
 
+	public int storeColor() {
+		return colorSelect.getSelectedIndex();	
+	}
 
 
 }

@@ -11,8 +11,9 @@ public interface GuiInterface {
 	public void createTxtFields();
 	public void createActionListerners();
 	
+	public void setColorScheme(int x1);
 	
-	static void recieveMsg(String s1) {}
+	static void recieveMsg(String[] s1) {}
 	
 	
 	//Methods for buttons
@@ -20,6 +21,7 @@ public interface GuiInterface {
 	public void setAutoScroll();
 	//public void logInClicked();
 	public void sendMsgClicked();
+	void scrollingLabel();
 	
 
 }
