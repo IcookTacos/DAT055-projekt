@@ -1,6 +1,15 @@
 # DAT055-projekt
 Projektarbete i kursen DAT055 
 
+# TODO (14 Februari 2020)
+- UML & sekvens diagram
+- Städa upp koden
+    * Kommentera
+    * Separera all funktionallitet och GUI
+    * Göra snyggt
+    * Göra mer läsbart
+    * Skapa enhetliga variabelnamn och metoder
+
 ## JadajadaClient v0.0 <- Erik
 - Basversion av client
 - All GUI skapad av Erik
