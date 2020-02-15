@@ -11,6 +11,7 @@ Projektarbete i kursen DAT055
 - [ ] Påbörja rapport / Inlämning (Kolla Canvas vad som står som krav)
 - [ ] UML diagram
 - [ ] Sekvens diagram
+- [ ] Flytta kod ifrån konstruktorn till metoder
 - [ ] Kommentera koden
 - [ ] Separera all funktionallitet och GUI
 - [ ] Göra snyggt
