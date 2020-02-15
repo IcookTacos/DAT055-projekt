@@ -1,7 +1,7 @@
 # DAT055-projekt
 Projektarbete i kursen DAT055 
 
-# NAMN OCH VERSION (LÄS INNAN DU GÖR EN BRANCH ELLER PULL REQUEST)
+# NAMN OCH VERSION (läs innan du gör en branch eller pull request)
 - **Klient:** JadaJada-Client-v1.x      ( x = version )
 
 - **Server:** JadaJada-Server-v1.x      ( x = version )
