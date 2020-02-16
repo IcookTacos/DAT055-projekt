@@ -10,73 +10,44 @@ import java.util.ArrayList;
 
 import serverPackage.*;
 
-
-
-
-public class ClientHandler extends Thread{
+public class ClientHandler extends Thread {
 
 	private DataInputStream dis = null;
 	private static ArrayList<Socket> users = null;
-	//private String[] serverlog;
-	//private static int logtracker = 0;
 
+	public ClientHandler(Socket clientSocket) {
 
-	public ClientHandler(Socket clientSocket)
-	{
-
-		if(users==null)
+		if (users == null)
 			users = new ArrayList<Socket>();
 
-		try
-		{
+		try {
 			users.add(clientSocket);
-		}
-		catch(Exception ex)
-		{
+		} catch (Exception ex) {
 			System.out.println("Adding client's socket to socket list failed!");
 		}
 
-
-		try
-		{
+		try {
 			dis = new DataInputStream(clientSocket.getInputStream());
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 
 		}
 
 		Gui.addTextToServerLog("Trying to add a new client!");
-		/*
-    try {
-        Thread.sleep(500);
-    } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    }
-		 */ 
-		Gui.addTextToServerLog("Client added!"); 
+		Gui.addTextToServerLog("Client added!");
 	}
 
-	public void tellEveryone(String message, String name)
-	{
+	public void tellEveryone(String message, String name) {
 		SimpleDateFormat sdf = new SimpleDateFormat("HH.mm");
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		
-		
+
 		for (Socket socket : users) {
 			Socket s = socket;
 
 			try {
-				
-				
+
 				DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 				dos.writeUTF(sdf.format(timestamp) + name + " " + message);
-
 				dos.flush();
-				
-				//serverlog[logtracker]=(message + name);
-				//logtracker++;
 			} catch (IOException e1) {
 				System.err.println("Skickades ej");
 				e1.printStackTrace();
@@ -84,14 +55,9 @@ public class ClientHandler extends Thread{
 		}
 	}
 
-
-
-
-	// reciving messages from a specific client and send to everyone else
-	public void run()
-	{   
-		while(true)
-		{
+	// Receive message from client and send to all clients
+	public void run() {
+		while (true) {
 			String line = null;
 
 			try {
@@ -100,41 +66,30 @@ public class ClientHandler extends Thread{
 				try {
 					Thread.sleep(50);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				line = dis.readUTF();
 				Gui.addTextToServerLog(line);
 
-				if(line!=null)
-				{
-					
+				if (line != null) {
+
 					String name = "";
-					if(line.startsWith("----New client: "))
-					{
+					if (line.startsWith("----New client: ")) {
 						name = line.replaceFirst("----New client: ", "");
 						tellEveryone("has joined room!", name);
-						Gui.addTextToServerLog(name + " has joined room!");  //Skriver till server log
-						
-					}
-					else
-					{
-						
+						Gui.addTextToServerLog(name + " has joined room!"); // Skriver till server log
+
+					} else {
+
 						tellEveryone(line, name);
 						System.err.println("Tell Everyone!");
-						//Server.addTextToServerLog(line);
 					}
 
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-			}   
-
-
+			}
 
 		}
-
-
 
 	}
 }
