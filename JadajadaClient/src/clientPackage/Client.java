@@ -6,69 +6,66 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Client implements ClientInterface{
+public class Client implements ClientInterface {
 
 	// INPUT & OUTPUT STREAM
 
 	public static boolean connected = false;
 	private static DataOutputStream dos = null;
 	private static DataInputStream dis = null;
-	
+
 	// SCOKET
 	public static Socket s = null;
 
+	public Client() {
 
-	public Client(){
-		
 		new Client_GUI();
+		clientInit();
+
+	}
+
+	public static void clientInit() {
 		System.out.println("Client is running!");
 
-		//Listening to server
-		while(true)
-		{
-			if(connected) {
+		// Listening to server
+		while (true) {
+			if (connected) {
 				System.out.println("Connected=" + connected);
 				break;
 			}
 			try {
 				Thread.sleep(150);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("ERROR VI ÄR FAST \n");
 
 		}
 
-		//Connected to server
+		// Connected to server
 		Thread th = new Thread(() -> {
-		
-		while(true)
-		{
-			System.out.println("Listening started!");
-			String line = null;
 
+			while (true) {
+				System.out.println("Listening started!");
+				String line = null;
 
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+				try {
+					line = dis.readUTF();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				if (line != null) {
+					Client_GUI.recieveMsg(line);
+				}
+
 			}
-
-			try {
-				line = dis.readUTF();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-
-			if(line!=null)
-			{
-				Client_GUI.recieveMsg(line);
-			}
-
-		}
-	});
+		});
 		th.start();
 	}
 
@@ -104,13 +101,10 @@ public class Client implements ClientInterface{
 				Client_GUI.ta_chat.append("dos init failed\n");
 			}
 
-			try
-			{
+			try {
 				dos.writeUTF("----New client:  " + userName);
 				System.err.println("----New client:  " + userName);
-			}
-			catch(Exception e)
-			{
+			} catch (Exception e) {
 				Client_GUI.ta_chat.append("dos.writeUTF() failed \n");
 			}
 		}
@@ -119,51 +113,35 @@ public class Client implements ClientInterface{
 
 	public static void sendMsg(String message, String userName) {
 
-
-
-
 		try {
-			//ta_chat.append("writing UTF" + '\n');
-			dos.writeUTF(userName + ": "+ message);
-			//ta_chat.append(ta_chat.getText().trim() + "writing UTF succeded" + '\n');
+			// ta_chat.append("writing UTF" + '\n');
+			dos.writeUTF(userName + ": " + message);
+			// ta_chat.append(ta_chat.getText().trim() + "writing UTF succeded" + '\n');
 		} catch (IOException e) {
 			Client_GUI.ta_chat.append(Client_GUI.ta_chat.getText().trim() + "writing UTF failed" + '\n');
 		}
 
-
-
-
 	}
 
 	public static void killConnection() {
-		// TODO Auto-generated method stub
-		
-		
+
 		try {
 			dis.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			dos.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		try {
 			s.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-
-
-
-
-
 
 }
