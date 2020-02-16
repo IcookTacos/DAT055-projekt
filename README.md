@@ -59,4 +59,12 @@ Projektarbete i kursen DAT055
 - Cleaned upp code
 - Interfaced further
 
+## JadaJada-Server-v1.2 <- Erik
+- Code cleaned, indentation, comments
+- All methodes called "Configuration" are now called "Init" short for initialize, I felt it made the code more intuitive
+- Added functionality for "admin" commands, ex. typing "disconnect" terminates the server
 
+## JadaJadaClient v1.5 <- Erik
+- Changed window size
+- Cleaned code, indentation, comments
+- Sepperated functionallity away from constructor to sepperate methods
