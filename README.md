@@ -8,15 +8,25 @@ Projektarbete i kursen DAT055
 
 # TODO (14 Februari 2020)
 - [ ] Veckorapport för Tisdag (18e Februari)
+
 - [ ] Påbörja rapport / Inlämning (Kolla Canvas vad som står som krav)
+
 - [ ] UML diagram
+
 - [ ] Sekvens diagram
-- [ ] Flytta kod ifrån konstruktorn till metoder
-- [ ] Kommentera koden
+
+- [x] Flytta kod ifrån konstruktorn till metoder
+
+- [x] Kommentera koden
+
 - [ ] Separera all funktionallitet och GUI
+
 - [ ] Göra snyggt
+
 - [ ] Göra mer läsbart
+
 - [ ] Skapa enhetliga variabelnamn och metoder
+
 
 ## JadajadaClient v0.0 <- Erik
 - Basversion av client
@@ -34,7 +44,7 @@ Projektarbete i kursen DAT055
 - Städat i Gui koden. Implementerat interface till både Client & Gui
 
 ## JadaJadaClient v1.2 <- Erik
-- ADDED: loginscreen, threaded client class
+- ADDED: loginscreen, threaded client clas
 - Main is not configured for launch. Change before starting java aplication
 
 ## JadaJadaClient v1.3 <- Erik
