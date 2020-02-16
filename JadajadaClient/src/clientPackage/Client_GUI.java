@@ -12,7 +12,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
-import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 public class Client_GUI extends JFrame implements GuiInterface {
@@ -34,53 +33,44 @@ public class Client_GUI extends JFrame implements GuiInterface {
 	public JButton b_send;
 
 	// LABEL
-	public JLabel lblIp;			
-	public JLabel lblPort;		
-	public JLabel lblName;		
+	public JLabel lblIp;
+	public JLabel lblPort;
+	public JLabel lblName;
 	public JLabel titleLabel;
 	public JLabel jadaLabel;
 	public JLabel jada2Label;
 	private JLabel scrollingOn;
 	private JLabel scrollingOff;
 
-	// SCROLLPANE 
+	// SCROLLPANE
 	public JScrollPane scrollPane;
 
 	// STRING
 	public String userName;
 	public String received = null;
 
-
-	// INT, BOOLEAN, ETC
+	// BORDERS, FONTS, INT,
 	Border blackline = BorderFactory.createLineBorder(Color.BLACK);
 	Border outline = BorderFactory.createTitledBorder(blackline);
+	Font f1 = new Font(Font.DIALOG, Font.PLAIN, 9);
+	Font f2 = new Font(Font.DIALOG, Font.PLAIN, 25);
+	Font f3 = new Font(Font.DIALOG, Font.BOLD | Font.ITALIC, 40);
 	public static int autoScroll = 0;
-	Font f1 = new Font(Font.DIALOG,Font.PLAIN,9);
-	Font f2 = new Font(Font.DIALOG,Font.PLAIN,25);
-	Font f3 = new Font(Font.DIALOG,Font.BOLD|Font.ITALIC,40);
 
-	//PLACEHOLDER
-
-
-
-
+	// PLACEHOLDER
 
 	public Client_GUI() {
-		createMainWindow();
-		createClientName();
-		createBtns();
-		createTxtArea();
-		createTxtFields();
-		createActionListerners();
-		setColorScheme(LoginGUI.colorIndex);
+
+		windowInit(); 							// Initialize window frame, size, etc
+		interfaceInit(); 						// Initialize interface
+		createActionListerners(); 				// Initialize Action Listeners
+		setColorScheme(LoginGUI.colorIndex);	// Selects interface theme
 		setVisible(true);
 	}
 
-
 	@Override
 	public void createActionListerners() {
-		// CONNECT BUTTON
-		//b_connect.addActionListener((e) -> logInClicked());	// MOVED
+
 		// SEND MESSAGE BUTTON
 		b_send.addActionListener((e) -> sendMsgClicked());
 
@@ -90,58 +80,46 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		// REFRESH BUTTON
 		Refresh.addActionListener((e) -> setAutoScroll());
 
-
 	}
 
 	@Override
-	public void createMainWindow() {
+	public void windowInit() {
 		// MAIN WINDOW CONFIGURATION
 		setTitle("JadaJada Messenger");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(645,480);
+		setSize(525, 480);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-
 	}
 
-	@Override
-	public void createClientName() {
-		// MAIN TITLE
+	public void interfaceInit() {
 
+		// MAIN TITLE
 		jadaLabel = new JLabel("J");
 		jadaLabel.setForeground(Color.RED);
-		jadaLabel.setBounds(20,20,50,50);
-		//jadaLabel.setBorder(outline);
+		jadaLabel.setBounds(20, 20, 50, 50);
 		jadaLabel.setFont(f3);
 
-		
 		jada2Label = new JLabel("J");
 		jada2Label.setForeground(Color.RED);
-		jada2Label.setBounds(83,20,50,50);
-		//jadaLabel.setBorder(outline);
+		jada2Label.setBounds(83, 20, 50, 50);
 		jada2Label.setFont(f3);
-		
+
 		titleLabel = new JLabel("  ada   ada");
-		titleLabel.setBounds(25,35,300,20);
+		titleLabel.setBounds(25, 35, 300, 20);
 		titleLabel.setFont(f2);
 
-		
 		add(titleLabel);
 		add(jadaLabel);
 		add(jada2Label);
 
-	}
-
-	@Override
-	public void createBtns() {
-
 		// SEND BUTTON
 		b_send = new JButton("Send");
-		b_send.setBounds(300,380,80,20);
+		b_send.setBounds(300, 380, 80, 20);
 		b_send.setContentAreaFilled(false);
 		b_send.setFont(f1);
 		contentPane.add(b_send);
@@ -150,24 +128,20 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		btnDc = new JButton("Disconnect");
 		btnDc.setContentAreaFilled(false);
 		btnDc.setFont(f1);
-		btnDc.setBounds(390,55, 81,18);
+		btnDc.setBounds(390, 55, 81, 18);
 		contentPane.add(btnDc);
 
 		// REFRESH BUTTON
 		Refresh = new JButton("Scrolling:");
 		Refresh.setContentAreaFilled(false);
 		Refresh.setFont(f1);
-		Refresh.setBounds(382,380,72,20);
+		Refresh.setBounds(382, 380, 72, 20);
 		contentPane.add(Refresh);
 
-	}
-
-	@Override
-	public void createTxtArea() {
 		// SCROLLPANE
 		scrollPane = new JScrollPane();
-		scrollPane.setFont(new Font(Font.DIALOG,Font.BOLD,20));
-		scrollPane.setBounds(39,75,435,300);
+		scrollPane.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
+		scrollPane.setBounds(39, 75, 435, 300);
 		contentPane.add(scrollPane);
 
 		// TEXTAREA CHATT
@@ -177,51 +151,40 @@ public class Client_GUI extends JFrame implements GuiInterface {
 
 		// LABEL ON
 		scrollingOn = new JLabel("On");
-		scrollingOn.setFont(new Font(Font.DIALOG,Font.ITALIC,12));
-		scrollingOn.setBounds(460,370,40,40);		
+		scrollingOn.setFont(new Font(Font.DIALOG, Font.ITALIC, 12));
+		scrollingOn.setBounds(460, 370, 40, 40);
 		add(scrollingOn);
 
 		// LABEL OFF
 		scrollingOff = new JLabel("Off");
-		scrollingOff.setFont(new Font(Font.DIALOG,Font.ITALIC,12));
-		scrollingOff.setBounds(460,370,40,40);
+		scrollingOff.setFont(new Font(Font.DIALOG, Font.ITALIC, 12));
+		scrollingOff.setBounds(460, 370, 40, 40);
 		add(scrollingOff);
 
-	}
-
-	@Override
-	public void scrollingLabel() {
-
-	}
-
-	@Override
-	public void createTxtFields() {
 		// TEXTFIELD INPUT
 		tf_input = new JTextField();
-		tf_input.setBounds(39,380,258,20);
+		tf_input.setBounds(39, 380, 258, 20);
 		tf_input.setColumns(10);
-		tf_input.addActionListener(e->sendMsgClicked());
+		tf_input.addActionListener(e -> sendMsgClicked());
 		contentPane.add(tf_input);
 
 	}
+
 	public void setAutoScroll() {
-		if(autoScroll == 1)
-		{
-			
+		if (autoScroll == 1) {
+
 			scrollingOff.setVisible(true);
 			scrollingOn.setVisible(false);
-			
+
 			autoScroll = 0;
-		} else
-		{
-			
+		} else {
+
 			scrollingOff.setVisible(false);
 			scrollingOn.setVisible(true);
 			autoScroll = 1;
 		}
 
 	}
-
 
 	@Override
 	public void disconnect() {
@@ -231,7 +194,6 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		System.exit(0);
 
 	}
-
 
 	@Override
 	public void sendMsgClicked() {
@@ -243,68 +205,58 @@ public class Client_GUI extends JFrame implements GuiInterface {
 
 	public static void recieveMsg(String messageRecieved) {
 		ta_chat.append(messageRecieved + "\n");
-		if(autoScroll == 1) {
+		if (autoScroll == 1) {
 			ta_chat.setCaretPosition(ta_chat.getDocument().getLength());
 		}
 
 	}
 
-
 	@Override
 	public void setColorScheme(int index) {
-		
-	
-		
-		
-		if(index == 1) {
 
-			//WINDOW COLOR
+		if (index == 1) {
+
+			// WINDOW COLOR
 			contentPane.setBackground(Color.DARK_GRAY);
 			contentPane.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-			//contentPane.setBorder(raisedbevel);
-			
-			//SCROLLPANE COLORS
+
+			// SCROLLPANE COLORS
 			scrollPane.setBackground(Color.DARK_GRAY);
 			scrollPane.setForeground(Color.DARK_GRAY);
 			scrollPane.setBorder(null);
 			scrollPane.getVerticalScrollBar().setBackground(Color.DARK_GRAY);
 			scrollPane.getHorizontalScrollBar().setBackground(Color.DARK_GRAY);
 			scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
-			    @Override
-			    protected void configureScrollBarColors() {
-			        this.thumbColor = Color.GRAY;
-			    }
+				@Override
+				protected void configureScrollBarColors() {
+					this.thumbColor = Color.GRAY;
+				}
 			});
-			
-			//LOGGO COLOR
+
+			// LOGGO COLOR
 			jadaLabel.setForeground(Color.yellow);
 			jada2Label.setForeground(Color.yellow);
 			titleLabel.setForeground(Color.white);
 
-			//Text area backround color
+			// Text area backround color
 			ta_chat.setBackground(Color.GRAY);
-			//Textfield background color
+			// Textfield background color
 			tf_input.setBackground(Color.GRAY);
-			
-			//Textarea text color
-			ta_chat.setForeground(Color.yellow);
-			//Textfield text color
-			tf_input.setForeground(Color.yellow);
 
-			
+			// Textarea text color
+			ta_chat.setForeground(Color.yellow);
+			// Textfield text color
+			tf_input.setForeground(Color.yellow);
 
 			// Colors around text area & text field
 			ta_chat.setBorder(null);
-			tf_input.setBorder(null);	
-			
-			//if u want color use the examples below			
-			//ta_chat.setBorder(BorderFactory.createLineBorder(Color.yellow));
-			//tf_input.setBorder(BorderFactory.createLineBorder(Color.yellow));
-			
-		
-			
-			
-			//BUTTON COLORS
+			tf_input.setBorder(null);
+
+			// if u want color use the examples below
+			// ta_chat.setBorder(BorderFactory.createLineBorder(Color.yellow));
+			// tf_input.setBorder(BorderFactory.createLineBorder(Color.yellow));
+
+			// BUTTON COLORS
 
 			// Text color in buttons
 			btnDc.setForeground(Color.white);
@@ -312,21 +264,18 @@ public class Client_GUI extends JFrame implements GuiInterface {
 			b_send.setForeground(Color.white);
 			scrollingOff.setForeground(Color.white);
 			scrollingOn.setForeground(Color.white);
-			
-			//If true background color will be added
+
+			// If true background color will be added
 			btnDc.setContentAreaFilled(true);
 			Refresh.setContentAreaFilled(true);
 			b_send.setContentAreaFilled(true);
-			
-			
+
 			// Set background color in buttons
 			btnDc.setBackground(Color.GRAY);
 			Refresh.setBackground(Color.GRAY);
 			b_send.setBackground(Color.GRAY);
 			scrollingOff.setBackground(Color.GRAY);
 			scrollingOn.setBackground(Color.GRAY);
-			
-
 
 		}
 
