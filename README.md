@@ -21,9 +21,7 @@ Projektarbete i kursen DAT055
 
 - [ ] Separera all funktionallitet och GUI
 
-- [ ] Göra snyggt
-
-- [ ] Göra mer läsbart
+- [ ] Skriv koden mer läsbart
 
 - [ ] Skapa enhetliga variabelnamn och metoder
 
