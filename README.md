@@ -28,6 +28,10 @@ Projektarbete i kursen DAT055
 
 # Client updates
 
+## JadaJada-Client-v2.0 
+- Nothing special
+- First complete working version
+
 ## JadaJadaClient v1.5 <- Erik
 - Changed window size
 - Cleaned code, indentation, comments
@@ -67,6 +71,11 @@ Projektarbete i kursen DAT055
 
 # Server updates
 
+## JadaJada-Server-v2.0 <- Erik
+- First complete project  version
+- Added further admin controlls
+- /tellAll <msg> sends message to all loggedin clients
+- /latencySLOW,NORMAL,FAST sets the server latency speed
 
 ## JadaJada-Server-v1.2 <- Erik
 - Code cleaned, indentation, comments
