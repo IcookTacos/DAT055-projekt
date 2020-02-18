@@ -14,6 +14,8 @@ public class ClientHandler extends Thread {
 
 	private DataInputStream dis = null;
 	private static ArrayList<Socket> users = null;
+	private static ArrayList<String> serverlog = new ArrayList<String>();
+	public static int latency=50;
 
 	public ClientHandler(Socket clientSocket) {
 
@@ -36,9 +38,10 @@ public class ClientHandler extends Thread {
 		Gui.addTextToServerLog("Client added!");
 	}
 
-	public void tellEveryone(String message, String name) {
+	public static void tellEveryone(String message, String name) {
 		SimpleDateFormat sdf = new SimpleDateFormat("HH.mm");
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		serverlog.add(sdf.format(timestamp) + name + " " + message);
 
 		for (Socket socket : users) {
 			Socket s = socket;
@@ -57,6 +60,7 @@ public class ClientHandler extends Thread {
 
 	// Receive message from client and send to all clients
 	public void run() {
+		
 		while (true) {
 			String line = null;
 
@@ -64,7 +68,7 @@ public class ClientHandler extends Thread {
 				System.out.println("Reading client input");
 
 				try {
-					Thread.sleep(50);
+					Thread.sleep(latency);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -76,6 +80,7 @@ public class ClientHandler extends Thread {
 					String name = "";
 					if (line.startsWith("----New client: ")) {
 						name = line.replaceFirst("----New client: ", "");
+						sendMsgHistory();
 						tellEveryone("has joined room!", name);
 						Gui.addTextToServerLog(name + " has joined room!"); // Skriver till server log
 
@@ -92,4 +97,25 @@ public class ClientHandler extends Thread {
 		}
 
 	}
+
+	public void sendMsgHistory() {
+
+		Socket index = users.get(users.size() - 1);
+
+		for (String s1 : serverlog) {
+
+			try {
+
+				DataOutputStream dos = new DataOutputStream(index.getOutputStream());
+				dos.writeUTF(s1);
+				dos.flush();
+
+			} catch (IOException e1) {
+				e1.printStackTrace();
+
+			}
+
+		}
+	}
+
 }

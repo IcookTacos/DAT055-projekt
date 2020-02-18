@@ -15,15 +15,16 @@ import handlerPackage.ClientHandler;
 public class Server implements ServerInterface {
 
 	public static int portNumber = 2309;
-
 	private static ServerSocket ss = null;
 	private static Socket socket = null;
 
 	public Server() {
-	} // EMPTY CONSTRUCTOR (Maybe bad coding practice ?)
+		serverInit();
+	} 
 
 	public static void main(String args[]) {
-		serverInit();
+		
+		new Server();
 	}
 
 	private static void serverInit() {
@@ -88,7 +89,6 @@ public class Server implements ServerInterface {
 		try {
 
 			return InetAddress.getLocalHost().getHostAddress().toString();
-			// return reader.readLine();
 		} catch (Exception e) {
 
 		}
