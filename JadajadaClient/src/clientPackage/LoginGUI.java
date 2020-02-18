@@ -43,13 +43,13 @@ public class LoginGUI extends JFrame {
 	// COMBOBOX
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private JComboBox colorSelect = new JComboBox(colors);
+	
 
 	public LoginGUI() {
 
 		windowInit();
 		interfaceInit();
 		setVisible(true);
-
 	}
 
 	public void logInClicked() {
@@ -142,7 +142,6 @@ public class LoginGUI extends JFrame {
 		// COMBOBOX
 		colorSelect.setSelectedIndex(1);
 		colorSelect.setBounds(90, 230, 90, 20);
-		colorSelect.setSelectedIndex(0);
 		colorSelect.setBackground(Color.LIGHT_GRAY);
 		add(colorSelect);
 

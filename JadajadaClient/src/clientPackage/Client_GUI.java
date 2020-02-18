@@ -146,6 +146,7 @@ public class Client_GUI extends JFrame implements GuiInterface {
 
 		// TEXTAREA CHATT
 		ta_chat = new JTextArea();
+		ta_chat.setWrapStyleWord(true);
 		scrollPane.setViewportView(ta_chat);
 		ta_chat.setEditable(false);
 
