@@ -6,24 +6,40 @@ Projektarbete i kursen DAT055
 
 - **Server:** JadaJada-Server-v2.x      ( x = version )
 
-# TODO (14 Februari 2020)
-- [ ] Veckorapport för Tisdag (18e Februari)
+# TODO (18 Februari)
+- [ ] Vecorapport för Tisdag (25e Februari)
+
+- [ ] UML diagram
+
+- [ ] Påbörja rapport / dokumentation / inlämning (Kolla canvas vad som står som krav)
+
+- [ ] Testa programmet, få det att fungera utanför Chalmers! Försök att få det att fungera "på riktigt" 
+
+- [ ] Undersök "Edge Cases",  
+                  
+                    vad händer om någon försöker chatta när servern är stängd?
+                
+                    vad händer om någon är inloggad när servern stängs?
+
+
+# TODO (14 Februari)
+- [x] Veckorapport för Tisdag (18e Februari)
 
 - [ ] Påbörja rapport / Inlämning (Kolla Canvas vad som står som krav)
 
 - [ ] UML diagram
 
-- [ ] Sekvens diagram
+- [ ] Sekvens Diagram
 
 - [x] Flytta kod ifrån konstruktorn till metoder
 
 - [x] Kommentera koden
 
-- [ ] Separera all funktionallitet och GUI
+- [x] Separera all funktionallitet och GUI
 
-- [ ] Skriv koden mer läsbart
+- [x] Skriv koden mer läsbart
 
-- [ ] Skapa enhetliga variabelnamn och metoder
+- [x] Skapa enhetliga variabelnamn och metoder
 
 
 # Client updates
