@@ -28,7 +28,7 @@ Projektarbete i kursen DAT055
 
 # Client updates
 
-## JadaJada-Client-v2.0 
+## JadaJada-Client-v2.0 <- Erik
 - Nothing special
 - First complete working version
 
