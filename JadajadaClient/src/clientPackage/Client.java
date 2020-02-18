@@ -34,7 +34,7 @@ public class Client implements ClientInterface {
 				break;
 			}
 			try {
-				Thread.sleep(150);
+				Thread.sleep(5);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
