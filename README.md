@@ -9,6 +9,8 @@ Projektarbete i kursen DAT055
 # TODO (18 Februari)
 - [ ] Vecorapport för Tisdag (25e Februari)
 
+- [ ] Ändra alla metoder som inte behöver vara public till private
+
 - [ ] UML diagram
 
 - [ ] Påbörja rapport / dokumentation / inlämning (Kolla canvas vad som står som krav)
