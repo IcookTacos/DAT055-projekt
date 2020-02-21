@@ -20,13 +20,9 @@ public class Server implements ServerInterface {
 
 	public Server() {
 		serverInit();
-	} 
-
-	public static void main(String args[]) {
-		
-		new Server();
 	}
 
+	
 	private static void serverInit() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -74,7 +70,6 @@ public class Server implements ServerInterface {
 
 			site = new URL("http://checkip.amazonaws.com");
 		} catch (MalformedURLException e) {
-
 			e.printStackTrace();
 		}
 
@@ -82,24 +77,20 @@ public class Server implements ServerInterface {
 
 			new BufferedReader(new InputStreamReader(site.openStream()));
 		} catch (IOException e) {
-
 			e.printStackTrace();
 		}
 
 		try {
-
 			return InetAddress.getLocalHost().getHostAddress().toString();
 		} catch (Exception e) {
 
 		}
-
 		return null;
 
 	}
 
 	public static void createSocket(int port) {
 		try {
-
 			ss = new ServerSocket(port);
 		} catch (IOException e1) {
 
@@ -108,26 +99,18 @@ public class Server implements ServerInterface {
 	}
 
 	public static void runClientHandler() {
-
 		while (true) {
-
 			try {
-
 				socket = ss.accept();
 			} catch (IOException e) {
-
 			}
-
 			System.out.println("Creating new ClientListener!");
-
 			new ClientHandler(socket).start();
-
 		}
-
 	}
 
 	public static void shutDown() {
-
+		
 		ss = null;
 		System.exit(0);
 
