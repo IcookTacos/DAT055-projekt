@@ -89,6 +89,10 @@ Projektarbete i kursen DAT055
 
 # Server updates
 
+## JadaJada-Server-v2.1 <- Erik
+- Added scrollbar
+- Added errormessage
+
 ## JadaJada-Server-v2.0 <- Erik
 - First complete project  version
 - Added further admin controlls
