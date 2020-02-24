@@ -12,8 +12,8 @@ import java.util.Random;
 public class DrawingComponent extends Component {
 
 	public void paint(Graphics g) {
+		
 		int increment = 0;
-
 		// RED BOXES
 		for (int i = 0; i < 14; i++) {
 			Graphics2D g2 = (Graphics2D) g;
