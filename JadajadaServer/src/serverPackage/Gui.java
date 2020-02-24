@@ -146,23 +146,23 @@ public class Gui extends JFrame implements GuiInterface {
 
 	}
 
-	public void adminHelp() {
+	private void adminHelp() {
 
 		addTextToServerLog(
 				"/disconnect = terminate the server\n/latencySLOW = slows down the server \n/latencyFAST = speeds up the server\n /tellAll <msg> sends message to all clients");
 	}
 
-	public void setLatencySLOW() {
+	private void setLatencySLOW() {
 		ClientHandler.latency = 5000;
 		ClientHandler.tellEveryone("SERVER SET TO SLOW", " Admin:");
 	}
 
-	public void setLatencyFAST() {
+	private void setLatencyFAST() {
 		ClientHandler.latency = 5;
 		ClientHandler.tellEveryone("SERVER SET TO FAST", " Admin:");
 	}
 
-	public void setLatencyNORMAL() {
+	private void setLatencyNORMAL() {
 		ClientHandler.latency = 50;
 		ClientHandler.tellEveryone("SERVER SET TO FAST", " Admin:");
 	}

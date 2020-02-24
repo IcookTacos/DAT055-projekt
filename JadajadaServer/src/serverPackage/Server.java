@@ -23,7 +23,7 @@ public class Server implements ServerInterface {
 	}
 
 	
-	private static void serverInit() {
+	private void serverInit() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
