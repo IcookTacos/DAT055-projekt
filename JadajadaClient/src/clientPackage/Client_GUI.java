@@ -19,7 +19,7 @@ public class Client_GUI extends JFrame implements GuiInterface {
 	private static final long serialVersionUID = 1L;
 
 	// JPANEL
-	public JPanel contentPane;
+	private JPanel contentPane;
 
 	// TEXTAREA
 	public static JTextArea ta_chat;
@@ -33,12 +33,9 @@ public class Client_GUI extends JFrame implements GuiInterface {
 	public JButton b_send;
 
 	// LABEL
-	public JLabel lblIp;
-	public JLabel lblPort;
-	public JLabel lblName;
-	public JLabel titleLabel;
-	public JLabel jadaLabel;
-	public JLabel jada2Label;
+	private JLabel titleLabel;
+	private JLabel jadaLabel;
+	private JLabel jada2Label;
 	private JLabel scrollingOn;
 	private JLabel scrollingOff;
 
@@ -57,14 +54,12 @@ public class Client_GUI extends JFrame implements GuiInterface {
 	Font f3 = new Font(Font.DIALOG, Font.BOLD | Font.ITALIC, 40);
 	public static int autoScroll = 0;
 
-	// PLACEHOLDER
-
 	public Client_GUI() {
 
-		windowInit(); 							// Initialize window frame, size, etc
-		interfaceInit(); 						// Initialize interface
-		createActionListerners(); 				// Initialize Action Listeners
-		setColorScheme(LoginGUI.colorIndex);	// Selects interface theme
+		windowInit(); // Initialize window frame, size, etc
+		interfaceInit(); // Initialize interface
+		createActionListerners(); // Initialize Action Listeners
+		setColorScheme(LoginGUI.colorIndex); // Selects interface theme
 		setVisible(true);
 	}
 
@@ -278,6 +273,74 @@ public class Client_GUI extends JFrame implements GuiInterface {
 			scrollingOff.setBackground(Color.GRAY);
 			scrollingOn.setBackground(Color.GRAY);
 
+		}
+		
+		if (index == 2) {
+
+			// WINDOW COLOR
+			contentPane.setBackground(Color.BLACK);
+			contentPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+			// SCROLLPANE COLORS
+			scrollPane.setBackground(new Color(33,33,33));
+			scrollPane.setForeground(new Color(33,33,33));
+			scrollPane.setBorder(null);
+			scrollPane.getVerticalScrollBar().setBackground(new Color(33,33,33));
+			scrollPane.getHorizontalScrollBar().setBackground(new Color(33,33,33));
+			scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+				@Override
+				protected void configureScrollBarColors() {
+					this.thumbColor = Color.BLACK;
+				}
+			});
+
+			// LOGGO COLOR
+			jadaLabel.setForeground(new Color(80,146,36));
+			jada2Label.setForeground(new Color(80,146,36));
+			titleLabel.setForeground(new Color(48,95,17));
+
+			// Text area backround color
+			ta_chat.setBackground(new Color(37,37,37));
+			// Textfield background color
+			tf_input.setBackground(new Color(37,37,37));
+
+			// Textarea text color
+			ta_chat.setForeground(new Color(48,95,17));
+			// Textfield text color
+			tf_input.setForeground(new Color(48,95,17));
+
+			// Colors around text area & text field
+			ta_chat.setBorder(null);
+			tf_input.setBorder(null);
+
+			// if u want color use the examples below
+			// ta_chat.setBorder(BorderFactory.createLineBorder(Color.yellow));
+			// tf_input.setBorder(BorderFactory.createLineBorder(Color.yellow));
+
+			// BUTTON COLORS
+
+			// Text color in buttons
+			btnDc.setForeground(new Color(37,37,37));
+			Refresh.setForeground(new Color(37,37,37));
+			b_send.setForeground(new Color(37,37,37));
+			scrollingOff.setForeground(new Color(37,37,37));
+			scrollingOn.setForeground(new Color(37,37,37));
+
+			// If true background color will be added
+			btnDc.setContentAreaFilled(true);
+			Refresh.setContentAreaFilled(true);
+			b_send.setContentAreaFilled(true);
+
+			// Set background color in buttons
+			btnDc.setBackground(new Color(48,95,17));
+			Refresh.setBackground(new Color(48,95,17));
+			b_send.setBackground(new Color(48,95,17));
+			scrollingOff.setBackground(new Color(48,95,17));
+			scrollingOn.setBackground(new Color(48,95,17));
+			scrollingOn.setBorder(null);
+			b_send.setBorder(null);
+			Refresh.setBorder(null);
+			btnDc.setBorder(null);
 		}
 
 	}

@@ -31,7 +31,7 @@ public class LoginGUI extends JFrame {
 	private JButton login;
 
 	// STRING
-	public static String[] colors = { "Default", "Tibia", "WIP", "WIP" };
+	public static String[] colors = { "Default", "Tibia", "Matrix" };
 	public static String user = null;
 
 	// FONT & BORDER
@@ -140,7 +140,7 @@ public class LoginGUI extends JFrame {
 		add(login);
 
 		// COMBOBOX
-		colorSelect.setSelectedIndex(1);
+		colorSelect.setSelectedIndex(0);
 		colorSelect.setBounds(90, 230, 90, 20);
 		colorSelect.setBackground(Color.LIGHT_GRAY);
 		add(colorSelect);

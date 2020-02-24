@@ -24,7 +24,7 @@ public class Client implements ClientInterface {
 
 	}
 
-	public static void clientInit() {
+	public void clientInit() {
 		System.out.println("Client is running!");
 
 		// Listening to server
