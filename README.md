@@ -6,7 +6,7 @@ Projektarbete i kursen DAT055
 
 - **Server:** JadaJada-Server-v2.x      ( x = version )
 
-# TODO (125 Februari)
+# TODO (25 Februari)
 - [ ] Vecorapport för Tisdag (3e Mars)
 - [ ] Kommentera ( /** framför publika metoder och klasse )
 - [ ] Flytta servern till DigitalOcean
