@@ -6,14 +6,20 @@ Projektarbete i kursen DAT055
 
 - **Server:** JadaJada-Server-v2.x      ( x = version )
 
+# TODO (125 Februari)
+- [ ] Vecorapport för Tisdag (3e Mars)
+- [ ] Kommentera ( /** framför publika metoder och klasse )
+- [ ] Flytta servern till DigitalOcean
+- [ ] Skriva rapport
+
 # TODO (18 Februari)
-- [ ] Vecorapport för Tisdag (25e Februari)
+- [x] Vecorapport för Tisdag (25e Februari)
 
-- [ ] Ändra alla metoder som inte behöver vara public till private
+- [x] Ändra alla metoder som inte behöver vara public till private
 
-- [ ] UML diagram
+- [x] UML diagram
 
-- [ ] Påbörja rapport / dokumentation / inlämning (Kolla canvas vad som står som krav)
+- [x] Påbörja rapport / dokumentation / inlämning (Kolla canvas vad som står som krav)
 
 - [ ] Testa programmet, få det att fungera utanför Chalmers! Försök att få det att fungera "på riktigt" 
 
