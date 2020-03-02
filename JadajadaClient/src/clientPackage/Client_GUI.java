@@ -189,11 +189,11 @@ public class Client_GUI extends JFrame implements GuiInterface {
 
 	@Override
 	public void disconnect() {
+		Client.disconnectMsg(User.name);
 		Client.killConnection();
 		contentPane.setVisible(false);
 		dispose();
 		System.exit(0);
-
 	}
 
 	@Override
@@ -203,7 +203,7 @@ public class Client_GUI extends JFrame implements GuiInterface {
 			if (message != null) {
 				if (message != "") {
 					if (message != "\n") {
-						Client.sendMsg(message, LoginGUI.user);
+						Client.sendMsg(message, User.name);
 					}
 				}
 			}
