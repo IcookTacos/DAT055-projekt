@@ -7,7 +7,4 @@ public interface ClientInterface {
 	static void sendMsg(String s1, String s2) {}
 	static void killConnection() {}
 	
-	
-
-}
-
+	}

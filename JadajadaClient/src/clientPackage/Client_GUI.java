@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
@@ -56,10 +57,11 @@ public class Client_GUI extends JFrame implements GuiInterface {
 
 	public Client_GUI() {
 
-		windowInit(); // Initialize window frame, size, etc
-		interfaceInit(); // Initialize interface
-		createActionListerners(); // Initialize Action Listeners
-		setColorScheme(LoginGUI.colorIndex); // Selects interface theme
+		windowInit(); 							// Initialize window frame, size, etc
+		interfaceInit(); 						// Initialize interface
+		createActionListerners(); 				// Initialize Action Listeners
+		setColorScheme(LoginGUI.colorIndex); 	// Selects interface theme
+		setAutoScroll();
 		setVisible(true);
 	}
 
@@ -133,29 +135,30 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		Refresh.setBounds(382, 380, 72, 20);
 		contentPane.add(Refresh);
 
-		// SCROLLPANE
-		scrollPane = new JScrollPane();
-		scrollPane.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-		scrollPane.setBounds(39, 75, 435, 300);
-		contentPane.add(scrollPane);
-
 		// TEXTAREA CHATT
 		ta_chat = new JTextArea();
 		ta_chat.setWrapStyleWord(true);
-		scrollPane.setViewportView(ta_chat);
+		ta_chat.setLineWrap(true);
 		ta_chat.setEditable(false);
 
-		// LABEL ON
-		scrollingOn = new JLabel("On");
-		scrollingOn.setFont(new Font(Font.DIALOG, Font.ITALIC, 12));
-		scrollingOn.setBounds(460, 370, 40, 40);
-		add(scrollingOn);
+		// SCROLLPANE
+		scrollPane = new JScrollPane(ta_chat, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
+		scrollPane.setBounds(39, 75, 435, 300);
+		contentPane.add(scrollPane);
 
 		// LABEL OFF
 		scrollingOff = new JLabel("Off");
 		scrollingOff.setFont(new Font(Font.DIALOG, Font.ITALIC, 12));
 		scrollingOff.setBounds(460, 370, 40, 40);
 		add(scrollingOff);
+
+		// LABEL ON
+		scrollingOn = new JLabel("On");
+		scrollingOn.setFont(new Font(Font.DIALOG, Font.ITALIC, 12));
+		scrollingOn.setBounds(460, 370, 40, 40);
+		add(scrollingOn);
 
 		// TEXTFIELD INPUT
 		tf_input = new JTextField();
@@ -171,8 +174,8 @@ public class Client_GUI extends JFrame implements GuiInterface {
 
 			scrollingOff.setVisible(true);
 			scrollingOn.setVisible(false);
-
 			autoScroll = 0;
+			
 		} else {
 
 			scrollingOff.setVisible(false);
@@ -215,6 +218,7 @@ public class Client_GUI extends JFrame implements GuiInterface {
 			// WINDOW COLOR
 			contentPane.setBackground(Color.DARK_GRAY);
 			contentPane.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+			setTitle("JadaJada Tibia");
 
 			// SCROLLPANE COLORS
 			scrollPane.setBackground(Color.DARK_GRAY);
@@ -274,19 +278,20 @@ public class Client_GUI extends JFrame implements GuiInterface {
 			scrollingOn.setBackground(Color.GRAY);
 
 		}
-		
+
 		if (index == 2) {
 
 			// WINDOW COLOR
 			contentPane.setBackground(Color.BLACK);
 			contentPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			setTitle("JadaJada Matrix");
 
 			// SCROLLPANE COLORS
-			scrollPane.setBackground(new Color(33,33,33));
-			scrollPane.setForeground(new Color(33,33,33));
+			scrollPane.setBackground(new Color(33, 33, 33));
+			scrollPane.setForeground(new Color(33, 33, 33));
 			scrollPane.setBorder(null);
-			scrollPane.getVerticalScrollBar().setBackground(new Color(33,33,33));
-			scrollPane.getHorizontalScrollBar().setBackground(new Color(33,33,33));
+			scrollPane.getVerticalScrollBar().setBackground(new Color(33, 33, 33));
+			scrollPane.getHorizontalScrollBar().setBackground(new Color(33, 33, 33));
 			scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
 				@Override
 				protected void configureScrollBarColors() {
@@ -295,19 +300,19 @@ public class Client_GUI extends JFrame implements GuiInterface {
 			});
 
 			// LOGGO COLOR
-			jadaLabel.setForeground(new Color(80,146,36));
-			jada2Label.setForeground(new Color(80,146,36));
-			titleLabel.setForeground(new Color(48,95,17));
+			jadaLabel.setForeground(new Color(80, 146, 36));
+			jada2Label.setForeground(new Color(80, 146, 36));
+			titleLabel.setForeground(new Color(48, 95, 17));
 
 			// Text area backround color
-			ta_chat.setBackground(new Color(37,37,37));
+			ta_chat.setBackground(new Color(37, 37, 37));
 			// Textfield background color
-			tf_input.setBackground(new Color(37,37,37));
+			tf_input.setBackground(new Color(37, 37, 37));
 
 			// Textarea text color
-			ta_chat.setForeground(new Color(48,95,17));
+			ta_chat.setForeground(new Color(48, 95, 17));
 			// Textfield text color
-			tf_input.setForeground(new Color(48,95,17));
+			tf_input.setForeground(new Color(48, 95, 17));
 
 			// Colors around text area & text field
 			ta_chat.setBorder(null);
@@ -320,11 +325,11 @@ public class Client_GUI extends JFrame implements GuiInterface {
 			// BUTTON COLORS
 
 			// Text color in buttons
-			btnDc.setForeground(new Color(37,37,37));
-			Refresh.setForeground(new Color(37,37,37));
-			b_send.setForeground(new Color(37,37,37));
-			scrollingOff.setForeground(new Color(37,37,37));
-			scrollingOn.setForeground(new Color(37,37,37));
+			btnDc.setForeground(new Color(37, 37, 37));
+			Refresh.setForeground(new Color(37, 37, 37));
+			b_send.setForeground(new Color(37, 37, 37));
+			scrollingOff.setForeground(new Color(37, 37, 37));
+			scrollingOn.setForeground(new Color(37, 37, 37));
 
 			// If true background color will be added
 			btnDc.setContentAreaFilled(true);
@@ -332,11 +337,11 @@ public class Client_GUI extends JFrame implements GuiInterface {
 			b_send.setContentAreaFilled(true);
 
 			// Set background color in buttons
-			btnDc.setBackground(new Color(48,95,17));
-			Refresh.setBackground(new Color(48,95,17));
-			b_send.setBackground(new Color(48,95,17));
-			scrollingOff.setBackground(new Color(48,95,17));
-			scrollingOn.setBackground(new Color(48,95,17));
+			btnDc.setBackground(new Color(48, 95, 17));
+			Refresh.setBackground(new Color(48, 95, 17));
+			b_send.setBackground(new Color(48, 95, 17));
+			scrollingOff.setBackground(new Color(48, 95, 17));
+			scrollingOn.setBackground(new Color(48, 95, 17));
 			scrollingOn.setBorder(null);
 			b_send.setBorder(null);
 			Refresh.setBorder(null);
