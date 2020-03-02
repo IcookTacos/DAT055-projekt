@@ -15,6 +15,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
+import java.awt.Toolkit;
+
 public class Client_GUI extends JFrame implements GuiInterface {
 
 	private static final long serialVersionUID = 1L;
@@ -57,10 +59,10 @@ public class Client_GUI extends JFrame implements GuiInterface {
 
 	public Client_GUI() {
 
-		windowInit(); 							// Initialize window frame, size, etc
-		interfaceInit(); 						// Initialize interface
-		createActionListerners(); 				// Initialize Action Listeners
-		setColorScheme(LoginGUI.colorIndex); 	// Selects interface theme
+		windowInit(); // Initialize window frame, size, etc
+		interfaceInit(); // Initialize interface
+		createActionListerners(); // Initialize Action Listeners
+		setColorScheme(LoginGUI.colorIndex); // Selects interface theme
 		setAutoScroll();
 		setVisible(true);
 	}
@@ -175,7 +177,7 @@ public class Client_GUI extends JFrame implements GuiInterface {
 			scrollingOff.setVisible(true);
 			scrollingOn.setVisible(false);
 			autoScroll = 0;
-			
+
 		} else {
 
 			scrollingOff.setVisible(false);
@@ -197,7 +199,15 @@ public class Client_GUI extends JFrame implements GuiInterface {
 	@Override
 	public void sendMsgClicked() {
 		String message = tf_input.getText();
-		Client.sendMsg(message, LoginGUI.user);
+		if (message != " ") {
+			if (message != null) {
+				if (message != "") {
+					if (message != "\n") {
+						Client.sendMsg(message, LoginGUI.user);
+					}
+				}
+			}
+		}
 		tf_input.setText(null);
 
 	}
@@ -207,6 +217,7 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		if (autoScroll == 1) {
 			ta_chat.setCaretPosition(ta_chat.getDocument().getLength());
 		}
+		Toolkit.getDefaultToolkit().beep();
 
 	}
 

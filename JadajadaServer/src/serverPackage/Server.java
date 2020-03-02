@@ -9,17 +9,20 @@ import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
+import java.util.Scanner;
 
-import handlerPackage.ClientHandler;
+
 
 public class Server implements ServerInterface {
 
 	public static int portNumber = 2309;
 	private static ServerSocket ss = null;
 	private static Socket socket = null;
+	Scanner scanner = new Scanner(System.in);
 
 	public Server() {
 		serverInit();
+		
 	}
 
 	
@@ -27,8 +30,8 @@ public class Server implements ServerInterface {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					new Gui();
-					Gui.addTextToServerLog("\nServer Online ...");
+									
+					System.out.println("Server Online ...");
 				} catch (Exception e) {
 
 				}
@@ -40,7 +43,24 @@ public class Server implements ServerInterface {
 		} catch (IOException e1) {
 
 		}
+		Thread th = new Thread(() -> {
+
+			while (true) {
+				String command = scanner.nextLine();
+				adminCommands(command);
+				System.err.print(command);
+				command = "";
+
+			}
+		});
+		th.start();
 		while (true) {
+			
+			//String command = scanner.nextLine();
+			//adminCommands(command);
+			//System.err.print(command);
+			//command = "";
+			
 			Socket s = null;
 			try {
 				s = ss.accept();
@@ -50,6 +70,7 @@ public class Server implements ServerInterface {
 
 			System.out.println("Creating new ClientListener!");
 			new ClientHandler(s).start();
+			
 		}
 	}
 
@@ -61,6 +82,10 @@ public class Server implements ServerInterface {
 		} catch (IOException e1) {
 
 		}
+		
+		
+		
+		
 
 	}
 
@@ -95,6 +120,7 @@ public class Server implements ServerInterface {
 		} catch (IOException e1) {
 
 		}
+		
 
 	}
 
@@ -115,5 +141,75 @@ public class Server implements ServerInterface {
 		System.exit(0);
 
 	}
+	
+	
+	@SuppressWarnings("unused")
+	private void adminCommands(String adminInput) {
+		int errorFlag = 1;
+		
+		
+		
+		if ((adminInput.compareTo("/disconnect")) == 0) {
+			Server.shutDown();
+			errorFlag = 0;
+		}
+		if ((adminInput.compareTo("/help") == 0)) {
+			adminHelp();
+			errorFlag = 0;
 
+		}
+
+		if ((adminInput.compareTo("/latencySLOW")) == 0) {
+			setLatencySLOW();
+			errorFlag = 0;
+
+		}
+
+		if ((adminInput.compareTo("/latencyFAST")) == 0) {
+			setLatencyFAST();
+			errorFlag = 0;
+
+		}
+
+		if ((adminInput.compareTo("/latencyNORMAL")) == 0) {
+			setLatencyNORMAL();
+			errorFlag = 0;
+
+		}
+
+		if ((adminInput.startsWith("/tellAll"))) {
+			String line = adminInput.replaceFirst("/tellAll", "");
+			ClientHandler.tellEveryone(line, " Admin:");
+			errorFlag = 0;
+
+		}
+
+		if ((errorFlag == 1)) {
+			System.out.println("INVALID COMMAND\nType /help for all commands");
+
+		}
+
+	}
+	private void adminHelp() {
+
+		System.out.println(
+				"/disconnect = terminate the server\n/latencySLOW = slows down the server \n/latencyFAST = speeds up the server\n /tellAll <msg> sends message to all clients");
+	}
+
+	private void setLatencySLOW() {
+		ClientHandler.latency = 5000;
+		ClientHandler.tellEveryone("SERVER SET TO SLOW", " Admin:");
+	}
+
+	private void setLatencyFAST() {
+		ClientHandler.latency = 5;
+		ClientHandler.tellEveryone("SERVER SET TO FAST", " Admin:");
+	}
+
+	private void setLatencyNORMAL() {
+		ClientHandler.latency = 50;
+		ClientHandler.tellEveryone("SERVER SET TO FAST", " Admin:");
+	}
+
+	
 }
