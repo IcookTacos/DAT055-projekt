@@ -20,6 +20,7 @@ public class LoginGUI extends JFrame {
 	private JLabel enterName;
 	private JLabel lblIp;
 	private JLabel lblPort;
+	public static JLabel error;
 
 	// TEXTFIELD
 	public JTextField nameField;
@@ -32,10 +33,12 @@ public class LoginGUI extends JFrame {
 
 	// STRING
 	public static String[] colors = { "Default", "Tibia", "Matrix" };
-	public static String user = null;
 
 	// FONT & BORDER
 	Font f1 = new Font(Font.DIALOG, Font.PLAIN, 9);
+	Font f2 = new Font(Font.DIALOG, Font.PLAIN, 10);
+	Font f3 = new Font(Font.DIALOG, Font.ITALIC, 12);
+	Font f4 = new Font(Font.DIALOG, Font.BOLD, 23);
 
 	// INT
 	public static int colorIndex = 0;
@@ -57,10 +60,10 @@ public class LoginGUI extends JFrame {
 		Client.connected = true;
 		String ip = tf_ip.getText();
 		int port = Integer.parseInt(tf_port.getText());
-		user = nameField.getText();
+		User.name = nameField.getText();
 		colorIndex = storeColor();
-		JOptionPane.showMessageDialog(null, "Welcome " + user, "Logged In!", JOptionPane.INFORMATION_MESSAGE);
-		Client.logIn(ip, port, user);
+		JOptionPane.showMessageDialog(null, "Welcome " + User.name, "Logged In!", JOptionPane.INFORMATION_MESSAGE);
+		Client.logIn(ip, port, User.name);
 		dispose();
 		new Client();
 
@@ -85,13 +88,13 @@ public class LoginGUI extends JFrame {
 
 		// MAIN TITLE
 		maintitle = new JLabel("Welcome to Jada!");
-		maintitle.setFont(new Font(Font.DIALOG, Font.BOLD, 23));
+		maintitle.setFont(f4);
 		maintitle.setBounds(40, 70, 200, 20);
 		add(maintitle);
 
 		// UNDERTITLE
 		undertitle = new JLabel("Messanger application in DAT055 ");
-		undertitle.setFont(new Font(Font.DIALOG, Font.ITALIC, 12));
+		undertitle.setFont(f3);
 		undertitle.setBounds(40, 88, 300, 20);
 		add(undertitle);
 
@@ -103,33 +106,33 @@ public class LoginGUI extends JFrame {
 
 		// USERNAME LABEL
 		enterName = new JLabel("USERNAME:");
-		enterName.setFont(new Font(Font.DIALOG, Font.PLAIN, 10));
+		enterName.setFont(f2);
 		enterName.setBounds(18, 150, 120, 20);
 		add(enterName);
 
 		// IP LABEL
 		lblIp = new JLabel("IP:");
 		lblIp.setBounds(65, 168, 120, 20);
-		lblIp.setFont(new Font(Font.DIALOG, Font.PLAIN, 10));
+		lblIp.setFont(f2);
 		add(lblIp);
 
 		// IP TEXTFIELD
 		tf_ip = new JTextField("64.227.46.227");
 		tf_ip.setBounds(90, 170, 90, 20);
-		tf_ip.setFont(new Font(Font.DIALOG, Font.PLAIN, 10));
+		tf_ip.setFont(f2);
 		tf_ip.addActionListener(e->logInClicked());
 		add(tf_ip);
 
 		// PORT LABEL
 		lblPort = new JLabel("PORT:");
 		lblPort.setBounds(48, 190, 120, 20);
-		lblPort.setFont(new Font(Font.DIALOG, Font.PLAIN, 10));
+		lblPort.setFont(f2);
 		add(lblPort);
 
 		// PORT TEXTFIELD
 		tf_port = new JTextField("2309");
 		tf_port.setBounds(90, 190, 90, 20);
-		tf_port.setFont(new Font(Font.DIALOG, Font.PLAIN, 10));
+		tf_port.setFont(f2);
 		tf_port.addActionListener(e->logInClicked());
 		add(tf_port);
 
@@ -146,6 +149,14 @@ public class LoginGUI extends JFrame {
 		colorSelect.setBounds(90, 230, 90, 20);
 		colorSelect.setBackground(Color.LIGHT_GRAY);
 		add(colorSelect);
+		
+		// ERROR LABEL
+		error = new JLabel("Invalid Server");
+		error.setBounds(90,110,200,20);
+		error.setForeground(Color.red);
+		add(error);
+		error.setVisible(false);
+		
 
 		// DECORATIONS
 		getContentPane().add(new DrawingComponent());

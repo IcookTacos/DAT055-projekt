@@ -73,6 +73,7 @@ public class Client implements ClientInterface {
 		{
 
 			connected = true;
+			LoginGUI.error.setVisible(true);
 			try {
 				s = new Socket(ip, portNumber);
 
@@ -121,6 +122,13 @@ public class Client implements ClientInterface {
 		
 		}
 
+	}
+	
+	public static void disconnectMsg(String userName) {
+		try {
+			dos.writeUTF(userName + ": " + " left the room!");
+		} catch (IOException e) {
+		}
 	}
 
 	public static void killConnection() {
