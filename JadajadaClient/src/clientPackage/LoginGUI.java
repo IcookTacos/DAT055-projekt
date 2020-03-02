@@ -114,9 +114,10 @@ public class LoginGUI extends JFrame {
 		add(lblIp);
 
 		// IP TEXTFIELD
-		tf_ip = new JTextField("localhost");
+		tf_ip = new JTextField("64.227.46.227");
 		tf_ip.setBounds(90, 170, 90, 20);
 		tf_ip.setFont(new Font(Font.DIALOG, Font.PLAIN, 10));
+		tf_ip.addActionListener(e->logInClicked());
 		add(tf_ip);
 
 		// PORT LABEL
@@ -129,6 +130,7 @@ public class LoginGUI extends JFrame {
 		tf_port = new JTextField("2309");
 		tf_port.setBounds(90, 190, 90, 20);
 		tf_port.setFont(new Font(Font.DIALOG, Font.PLAIN, 10));
+		tf_port.addActionListener(e->logInClicked());
 		add(tf_port);
 
 		// LOGIN BUTTON

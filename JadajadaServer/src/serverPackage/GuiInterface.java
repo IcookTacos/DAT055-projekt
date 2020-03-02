@@ -2,10 +2,10 @@ package serverPackage;
 
 public interface GuiInterface {
 	
-	static void addTextToServerLog(String string) {}
+	//static void addTextToServerLog(String string) {}
 	public void createActionListeners();
-	public void windowInit();
-	public void textAreaInit();
-	public void userInputField();
+	//public void windowInit();
+	//public void textAreaInit();
+	//public void userInputField();
 
 }

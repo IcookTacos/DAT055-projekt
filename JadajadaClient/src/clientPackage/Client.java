@@ -90,22 +90,21 @@ public class Client implements ClientInterface {
 				dis = new DataInputStream(s.getInputStream());
 			} catch (IOException e) {
 				e.printStackTrace();
-				Client_GUI.ta_chat.append("dis init failed\n");
+				
 			}
 
 			try {
 				dos = new DataOutputStream(s.getOutputStream());
 			} catch (IOException e) {
 				e.printStackTrace();
-				System.out.println("DataOutputStraem object init failed!");
-				Client_GUI.ta_chat.append("dos init failed\n");
+
 			}
 
 			try {
 				dos.writeUTF("----New client:  " + userName);
 				System.err.println("----New client:  " + userName);
 			} catch (Exception e) {
-				Client_GUI.ta_chat.append("dos.writeUTF() failed \n");
+				
 			}
 		}
 
@@ -113,12 +112,13 @@ public class Client implements ClientInterface {
 
 	public static void sendMsg(String message, String userName) {
 
+		
 		try {
-			// ta_chat.append("writing UTF" + '\n');
 			dos.writeUTF(userName + ": " + message);
-			// ta_chat.append(ta_chat.getText().trim() + "writing UTF succeded" + '\n');
 		} catch (IOException e) {
-			Client_GUI.ta_chat.append(Client_GUI.ta_chat.getText().trim() + "writing UTF failed" + '\n');
+			
+		
+		
 		}
 
 	}
