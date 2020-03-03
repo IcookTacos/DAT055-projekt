@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Client implements ClientInterface {
+import javax.swing.JOptionPane;
+
+public class Client {
 
 	// INPUT & OUTPUT STREAM
 
@@ -91,7 +93,7 @@ public class Client implements ClientInterface {
 				dis = new DataInputStream(s.getInputStream());
 			} catch (IOException e) {
 				e.printStackTrace();
-				
+
 			}
 
 			try {
@@ -105,7 +107,7 @@ public class Client implements ClientInterface {
 				dos.writeUTF("----New client:  " + userName);
 				System.err.println("----New client:  " + userName);
 			} catch (Exception e) {
-				
+
 			}
 		}
 
@@ -113,17 +115,14 @@ public class Client implements ClientInterface {
 
 	public static void sendMsg(String message, String userName) {
 
-		
 		try {
 			dos.writeUTF(userName + ": " + message);
 		} catch (IOException e) {
-			
-		
-		
+
 		}
 
 	}
-	
+
 	public static void disconnectMsg(String userName) {
 		try {
 			dos.writeUTF(userName + ": " + " left the room!");
@@ -152,4 +151,33 @@ public class Client implements ClientInterface {
 
 	}
 
+	public static boolean authenticate(String userName) {
+
+		// CONTROLLS USER IS NOT NAMED ADMIN
+		String check = User.name;
+		System.out.println(check);
+		if (check.equalsIgnoreCase("ADMIN")) {
+			User.validName = false;
+			JOptionPane.showMessageDialog(null, "Cannot be named " + User.name, "Bad username",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+		// CONTROLLS USENAME IS NOT EMPTY
+		if (check.isEmpty()) {
+			User.validName = false;
+			JOptionPane.showMessageDialog(null, "Username cannot be empty", "Bad username", JOptionPane.ERROR_MESSAGE);
+		}
+
+		// CONTROLLS WHITESPACE
+		int length = check.length();
+		char[] x = check.toCharArray();
+		for (int i = 0; i < length; i++) {
+			if (x[i] == ' ') {
+				User.validName = false;
+				JOptionPane.showMessageDialog(null, "Username cannot contain spaces", "Bad username",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		return User.validName;
+	}
 }
