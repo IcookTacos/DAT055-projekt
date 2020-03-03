@@ -85,7 +85,7 @@ public class ClientHandler extends Thread {
 					} else {
 
 						tellEveryone(line, name);
-						System.err.println("Tell Everyone!");
+						
 					}
 
 				}

@@ -49,17 +49,16 @@ public class Server implements ServerInterface {
 				String command = scanner.nextLine();
 				adminCommands(command);
 				System.err.print(command);
-				command = "";
+				command = null;
+				System.out.println("\n");
+				
 
 			}
 		});
 		th.start();
 		while (true) {
 			
-			//String command = scanner.nextLine();
-			//adminCommands(command);
-			//System.err.print(command);
-			//command = "";
+	
 			
 			Socket s = null;
 			try {
@@ -143,12 +142,10 @@ public class Server implements ServerInterface {
 	}
 	
 	
-	@SuppressWarnings("unused")
+
 	private void adminCommands(String adminInput) {
 		int errorFlag = 1;
-		
-		
-		
+				
 		if ((adminInput.compareTo("/disconnect")) == 0) {
 			Server.shutDown();
 			errorFlag = 0;
