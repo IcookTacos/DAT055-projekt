@@ -32,7 +32,7 @@ public class LoginGUI extends JFrame {
 	private JButton login;
 
 	// STRING
-	public static String[] colors = { "Default", "Tibia", "Matrix" };
+	private static String[] colors = { "Default", "Tibia", "Matrix" };
 
 	// FONT & BORDER
 	Font f1 = new Font(Font.DIALOG, Font.PLAIN, 9);
@@ -56,16 +56,19 @@ public class LoginGUI extends JFrame {
 	}
 
 	public void logInClicked() {
-
+		User.validName = true;
+		User.name = nameField.getText();
+		User.validName = Client.authenticate(User.name);
+		if(User.validName) {
 		Client.connected = true;
 		String ip = tf_ip.getText();
 		int port = Integer.parseInt(tf_port.getText());
-		User.name = nameField.getText();
 		colorIndex = storeColor();
 		JOptionPane.showMessageDialog(null, "Welcome " + User.name, "Logged In!", JOptionPane.INFORMATION_MESSAGE);
 		Client.logIn(ip, port, User.name);
 		dispose();
 		new Client();
+		}
 
 	}
 

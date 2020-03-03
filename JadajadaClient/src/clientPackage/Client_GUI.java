@@ -5,6 +5,7 @@ import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,7 +18,7 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import java.awt.Toolkit;
 
-public class Client_GUI extends JFrame implements GuiInterface {
+public class Client_GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,9 +32,12 @@ public class Client_GUI extends JFrame implements GuiInterface {
 	public JTextField tf_input;
 
 	// BUTTON
-	public JButton btnDc;
-	public JButton Refresh;
-	public JButton b_send;
+	private JButton btnDc;
+	private JButton refresh;
+	private JButton b_send;
+	private static String[] colors = { "Default", "Tibia", "Matrix" };
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private JComboBox colorSelect = new JComboBox(colors);
 
 	// LABEL
 	private JLabel titleLabel;
@@ -67,7 +71,6 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		setVisible(true);
 	}
 
-	@Override
 	public void createActionListerners() {
 
 		// SEND MESSAGE BUTTON
@@ -77,21 +80,7 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		btnDc.addActionListener((e) -> disconnect());
 
 		// REFRESH BUTTON
-		Refresh.addActionListener((e) -> setAutoScroll());
-
-	}
-
-	@Override
-	public void windowInit() {
-		// MAIN WINDOW CONFIGURATION
-		setTitle("JadaJada Messenger");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(525, 480);
-		setLocationRelativeTo(null);
-		setResizable(false);
-		contentPane = new JPanel();
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		refresh.addActionListener((e) -> setAutoScroll());
 
 	}
 
@@ -127,15 +116,15 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		btnDc = new JButton("Disconnect");
 		btnDc.setContentAreaFilled(false);
 		btnDc.setFont(f1);
-		btnDc.setBounds(390, 55, 81, 18);
+		btnDc.setBounds(391, 55, 81, 18);
 		contentPane.add(btnDc);
 
 		// REFRESH BUTTON
-		Refresh = new JButton("Scrolling:");
-		Refresh.setContentAreaFilled(false);
-		Refresh.setFont(f1);
-		Refresh.setBounds(382, 380, 72, 20);
-		contentPane.add(Refresh);
+		refresh = new JButton("Scrolling:");
+		refresh.setContentAreaFilled(false);
+		refresh.setFont(f1);
+		refresh.setBounds(382, 380, 72, 20);
+		contentPane.add(refresh);
 
 		// TEXTAREA CHATT
 		ta_chat = new JTextArea();
@@ -169,6 +158,13 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		tf_input.addActionListener(e -> sendMsgClicked());
 		contentPane.add(tf_input);
 
+		// COMBOBOX
+		colorSelect.setSelectedIndex(0);
+		colorSelect.setBounds(382, 402, 72, 18);
+		colorSelect.setBackground(Color.LIGHT_GRAY);
+		add(colorSelect);
+		colorSelect.addActionListener((e) -> setColorScheme(storeColor()));
+
 	}
 
 	public void setAutoScroll() {
@@ -187,16 +183,20 @@ public class Client_GUI extends JFrame implements GuiInterface {
 
 	}
 
-	@Override
-	public void disconnect() {
-		Client.disconnectMsg(User.name);
-		Client.killConnection();
-		contentPane.setVisible(false);
-		dispose();
-		System.exit(0);
+
+	public static void recieveMsg(String messageRecieved) {
+		ta_chat.append(messageRecieved + "\n");
+		if (autoScroll == 1) {
+			ta_chat.setCaretPosition(ta_chat.getDocument().getLength());
+		}
+		Toolkit.getDefaultToolkit().beep();
+
 	}
 
-	@Override
+	public int storeColor() {
+		return colorSelect.getSelectedIndex();
+	}
+	
 	public void sendMsgClicked() {
 		String message = tf_input.getText();
 		if (message != " ") {
@@ -211,18 +211,95 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		tf_input.setText(null);
 
 	}
+	
+	public void disconnect() {
+		Client.disconnectMsg(User.name);
+		Client.killConnection();
+		contentPane.setVisible(false);
+		dispose();
+		System.exit(0);
+	}
 
-	public static void recieveMsg(String messageRecieved) {
-		ta_chat.append(messageRecieved + "\n");
-		if (autoScroll == 1) {
-			ta_chat.setCaretPosition(ta_chat.getDocument().getLength());
-		}
-		Toolkit.getDefaultToolkit().beep();
+	public void windowInit() {
+		// MAIN WINDOW CONFIGURATION
+		setTitle("JadaJada Messenger");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(525, 480);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		contentPane = new JPanel();
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 
 	}
 
-	@Override
 	public void setColorScheme(int index) {
+
+		if (index == 0) {
+
+			// WINDOW COLOR
+			contentPane.setBackground(new Color(232,232,232));
+			contentPane.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+			setTitle("JadaJada Tibia");
+
+			// SCROLLPANE COLORS
+			scrollPane.setBackground(new Color(216,216,216));
+			scrollPane.setForeground(new Color(216,216,216));
+			scrollPane.setBorder((BorderFactory.createLineBorder(Color.DARK_GRAY)));
+			scrollPane.getVerticalScrollBar().setBackground(Color.DARK_GRAY);
+			scrollPane.getHorizontalScrollBar().setBackground(Color.DARK_GRAY);
+			scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+				@Override
+				protected void configureScrollBarColors() {
+					this.thumbColor = Color.LIGHT_GRAY;
+				}
+			});
+
+			// LOGGO COLOR
+			jadaLabel.setForeground(Color.red);
+			jada2Label.setForeground(Color.red);
+			titleLabel.setForeground(Color.black);
+
+			// Text area backround color
+			ta_chat.setBackground(Color.white);
+			// Textfield background color
+			tf_input.setBackground(Color.white);
+
+			// Textarea text color
+			ta_chat.setForeground(Color.black);
+			// Textfield text color
+			tf_input.setForeground(Color.black);
+
+			// Colors around text area & text field
+			//ta_chat.setBorder((BorderFactory.createLineBorder(Color.BLACK)));
+			tf_input.setBorder((BorderFactory.createLineBorder(Color.DARK_GRAY)));
+
+			// if u want color use the examples below
+			// ta_chat.setBorder(BorderFactory.createLineBorder(Color.yellow));
+			// tf_input.setBorder(BorderFactory.createLineBorder(Color.yellow));
+
+			// BUTTON COLORS
+
+			// Text color in buttons
+			btnDc.setForeground(Color.black);
+			refresh.setForeground(Color.black);
+			b_send.setForeground(Color.black);
+			scrollingOff.setForeground(Color.black);
+			scrollingOn.setForeground(Color.black);
+
+			// If true background color will be added
+			btnDc.setContentAreaFilled(true);
+			refresh.setContentAreaFilled(true);
+			b_send.setContentAreaFilled(true);
+
+			// Set background color in buttons
+			btnDc.setBackground(Color.LIGHT_GRAY);
+			refresh.setBackground(Color.LIGHT_GRAY);
+			b_send.setBackground(Color.LIGHT_GRAY);
+			scrollingOff.setBackground(Color.LIGHT_GRAY);
+			scrollingOn.setBackground(Color.LIGHT_GRAY);
+
+		}
 
 		if (index == 1) {
 
@@ -271,19 +348,19 @@ public class Client_GUI extends JFrame implements GuiInterface {
 
 			// Text color in buttons
 			btnDc.setForeground(Color.white);
-			Refresh.setForeground(Color.white);
+			refresh.setForeground(Color.white);
 			b_send.setForeground(Color.white);
 			scrollingOff.setForeground(Color.white);
 			scrollingOn.setForeground(Color.white);
 
 			// If true background color will be added
 			btnDc.setContentAreaFilled(true);
-			Refresh.setContentAreaFilled(true);
+			refresh.setContentAreaFilled(true);
 			b_send.setContentAreaFilled(true);
 
 			// Set background color in buttons
 			btnDc.setBackground(Color.GRAY);
-			Refresh.setBackground(Color.GRAY);
+			refresh.setBackground(Color.GRAY);
 			b_send.setBackground(Color.GRAY);
 			scrollingOff.setBackground(Color.GRAY);
 			scrollingOn.setBackground(Color.GRAY);
@@ -337,28 +414,27 @@ public class Client_GUI extends JFrame implements GuiInterface {
 
 			// Text color in buttons
 			btnDc.setForeground(new Color(37, 37, 37));
-			Refresh.setForeground(new Color(37, 37, 37));
+			refresh.setForeground(new Color(37, 37, 37));
 			b_send.setForeground(new Color(37, 37, 37));
 			scrollingOff.setForeground(new Color(37, 37, 37));
 			scrollingOn.setForeground(new Color(37, 37, 37));
 
 			// If true background color will be added
 			btnDc.setContentAreaFilled(true);
-			Refresh.setContentAreaFilled(true);
+			refresh.setContentAreaFilled(true);
 			b_send.setContentAreaFilled(true);
 
 			// Set background color in buttons
 			btnDc.setBackground(new Color(48, 95, 17));
-			Refresh.setBackground(new Color(48, 95, 17));
+			refresh.setBackground(new Color(48, 95, 17));
 			b_send.setBackground(new Color(48, 95, 17));
 			scrollingOff.setBackground(new Color(48, 95, 17));
 			scrollingOn.setBackground(new Color(48, 95, 17));
 			scrollingOn.setBorder(null);
 			b_send.setBorder(null);
-			Refresh.setBorder(null);
+			refresh.setBorder(null);
 			btnDc.setBorder(null);
 		}
-
 	}
 
 }
