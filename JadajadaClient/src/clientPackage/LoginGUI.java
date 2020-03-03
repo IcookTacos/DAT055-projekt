@@ -32,7 +32,7 @@ public class LoginGUI extends JFrame {
 	private JButton login;
 
 	// STRING
-	public static String[] colors = { "Default", "Tibia", "Matrix" };
+	private static String[] colors = { "Default", "Tibia", "Matrix" };
 
 	// FONT & BORDER
 	Font f1 = new Font(Font.DIALOG, Font.PLAIN, 9);

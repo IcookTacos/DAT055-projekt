@@ -5,6 +5,7 @@ import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,7 +21,7 @@ import java.awt.Toolkit;
 public class Client_GUI extends JFrame implements GuiInterface {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	// JPANEL
 	private JPanel contentPane;
 
@@ -31,10 +32,13 @@ public class Client_GUI extends JFrame implements GuiInterface {
 	public JTextField tf_input;
 
 	// BUTTON
-	public JButton btnDc;
-	public JButton Refresh;
-	public JButton b_send;
-
+	private JButton btnDc;
+	private JButton Refresh;
+	private JButton b_send;
+	private static String[] colors = { "Default", "Tibia", "Matrix" };
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private JComboBox colorSelect = new JComboBox(colors);
+	
 	// LABEL
 	private JLabel titleLabel;
 	private JLabel jadaLabel;
@@ -127,7 +131,7 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		btnDc = new JButton("Disconnect");
 		btnDc.setContentAreaFilled(false);
 		btnDc.setFont(f1);
-		btnDc.setBounds(390, 55, 81, 18);
+		btnDc.setBounds(3, 420, 81, 18);
 		contentPane.add(btnDc);
 
 		// REFRESH BUTTON
@@ -168,6 +172,13 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		tf_input.setColumns(10);
 		tf_input.addActionListener(e -> sendMsgClicked());
 		contentPane.add(tf_input);
+		
+		// COMBOBOX
+		colorSelect.setSelectedIndex(0);
+		colorSelect.setBounds(391, 55, 81, 18);
+		colorSelect.setBackground(Color.LIGHT_GRAY);
+		add(colorSelect);		
+		colorSelect.addActionListener((e) -> setColorScheme(storeColor()));
 
 	}
 
@@ -220,10 +231,83 @@ public class Client_GUI extends JFrame implements GuiInterface {
 		Toolkit.getDefaultToolkit().beep();
 
 	}
+	public int storeColor() {
+		return colorSelect.getSelectedIndex();
+	}
 
 	@Override
 	public void setColorScheme(int index) {
+		
+		if(index == 0) {
+			
+			// WINDOW COLOR
+						contentPane.setBackground(Color.lightGray);
+						contentPane.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+						setTitle("JadaJada Tibia");
 
+						// SCROLLPANE COLORS
+						scrollPane.setBackground(Color.LIGHT_GRAY);
+						scrollPane.setForeground(Color.LIGHT_GRAY);
+						scrollPane.setBorder(null);
+						scrollPane.getVerticalScrollBar().setBackground(Color.LIGHT_GRAY);
+						scrollPane.getHorizontalScrollBar().setBackground(Color.LIGHT_GRAY);
+						scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+							@Override
+							protected void configureScrollBarColors() {
+								this.thumbColor = Color.LIGHT_GRAY;
+							}
+						});
+
+						// LOGGO COLOR
+						jadaLabel.setForeground(Color.red);
+						jada2Label.setForeground(Color.red);
+						titleLabel.setForeground(Color.black);
+
+						// Text area backround color
+						ta_chat.setBackground(Color.white);
+						// Textfield background color
+						tf_input.setBackground(Color.white);
+
+						// Textarea text color
+						ta_chat.setForeground(Color.black);
+						// Textfield text color
+						tf_input.setForeground(Color.black);
+
+						// Colors around text area & text field
+						ta_chat.setBorder(null);
+						tf_input.setBorder(null);
+
+						// if u want color use the examples below
+						// ta_chat.setBorder(BorderFactory.createLineBorder(Color.yellow));
+						// tf_input.setBorder(BorderFactory.createLineBorder(Color.yellow));
+
+						// BUTTON COLORS
+
+						// Text color in buttons
+						btnDc.setForeground(Color.black);
+						Refresh.setForeground(Color.black);
+						b_send.setForeground(Color.black);
+						scrollingOff.setForeground(Color.black);
+						scrollingOn.setForeground(Color.black);
+
+						// If true background color will be added
+						btnDc.setContentAreaFilled(true);
+						Refresh.setContentAreaFilled(true);
+						b_send.setContentAreaFilled(true);
+
+						// Set background color in buttons
+						btnDc.setBackground(Color.LIGHT_GRAY);
+						Refresh.setBackground(Color.LIGHT_GRAY);
+						b_send.setBackground(Color.LIGHT_GRAY);
+						scrollingOff.setBackground(Color.LIGHT_GRAY);
+						scrollingOn.setBackground(Color.LIGHT_GRAY);
+
+					}
+
+			
+			
+		
+		
 		if (index == 1) {
 
 			// WINDOW COLOR
