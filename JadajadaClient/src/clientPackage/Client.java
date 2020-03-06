@@ -4,29 +4,41 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
-import javax.swing.JOptionPane;
+public class Client extends ClientGUI {
 
-public class Client {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-	// INPUT & OUTPUT STREAM
+	private boolean connected = false;
+	private boolean streams = true;
 
-	public static boolean connected = false;
+//	INPUT & OUTPUT STREAM
 	private static DataOutputStream dos = null;
 	private static DataInputStream dis = null;
 
-	// SCOKET
-	public static Socket s = null;
+//	Field for username
+	private String userName;
 
-	public Client() {
+//	SOCKET
+	private static Socket s;
 
-		new Client_GUI();
+	public Client(String internetProtocol, int port, String name, int startTheme) {
+		super(startTheme);
+		userName = name;
+
+		createActionListeners();
+		logIn(internetProtocol, port, userName);
 		clientInit();
 
 	}
 
-	public void clientInit() {
+	/**
+	 * Establishers out- putstreams with server
+	 */
+	private void clientInit() {
 		System.out.println("Client is running!");
 
 		// Listening to server
@@ -43,7 +55,9 @@ public class Client {
 
 		}
 
-		// Connected to server
+		/**
+		 * Threads the inputstream so that messages are always ready to be recieved
+		 */
 		Thread th = new Thread(() -> {
 
 			while (true) {
@@ -63,7 +77,7 @@ public class Client {
 				}
 
 				if (line != null) {
-					Client_GUI.recieveMsg(line);
+					this.recieveMsg(line);
 				}
 
 			}
@@ -71,66 +85,71 @@ public class Client {
 		th.start();
 	}
 
-	public static void logIn(String ip, int portNumber, String userName) {
+	
+	/**
+	 * Establishes a connection with server
+	 */
+	private void logIn(String ip, int portNumber, String userName) {
 		{
 
-			connected = true;
-			LoginGUI.error.setVisible(true);
 			try {
 				s = new Socket(ip, portNumber);
-
-				System.err.println(s);
-
-			} catch (UnknownHostException e) {
-
-				e.printStackTrace();
-			} catch (IOException e) {
-
-				e.printStackTrace();
+				connected = true;
+			} catch (IOException e1) {
+				new LoginGUI(true);
+				dispose();
+				this.dispose();
+				e1.printStackTrace();
 			}
+
+			System.err.println(s);
 
 			try {
 				dis = new DataInputStream(s.getInputStream());
 			} catch (IOException e) {
+				streams = false;
 				e.printStackTrace();
-
 			}
 
 			try {
 				dos = new DataOutputStream(s.getOutputStream());
 			} catch (IOException e) {
+				streams = false;
 				e.printStackTrace();
-
 			}
 
 			try {
 				dos.writeUTF("----New client:  " + userName);
 				System.err.println("----New client:  " + userName);
 			} catch (Exception e) {
-
+				streams = false;
 			}
+
+			if (!streams) {
+				System.err.println("Failed to establish streams");
+			}
+
 		}
 
 	}
 
-	public static void sendMsg(String message, String userName) {
-
+	/**
+	 * Sends message to all users that user has left
+	 * @param userName
+	 */
+	
+	private void disconnectMsg(String userName) {
 		try {
-			dos.writeUTF(userName + ": " + message);
-		} catch (IOException e) {
-
-		}
-
-	}
-
-	public static void disconnectMsg(String userName) {
-		try {
-			dos.writeUTF(userName + ": " + " left the room!");
+			dos.writeUTF(userName + " has left the room!");
 		} catch (IOException e) {
 		}
 	}
 
-	public static void killConnection() {
+	/**
+	 * Closes socket and streams
+	 */
+	
+	private void killConnection() {
 
 		try {
 			dis.close();
@@ -150,34 +169,43 @@ public class Client {
 		}
 
 	}
-
-	public static boolean authenticate(String userName) {
-
-		// CONTROLLS USER IS NOT NAMED ADMIN
-		String check = User.name;
-		System.out.println(check);
-		if (check.equalsIgnoreCase("ADMIN")) {
-			User.validName = false;
-			JOptionPane.showMessageDialog(null, "Cannot be named " + User.name, "Bad username",
-					JOptionPane.ERROR_MESSAGE);
-		}
-
-		// CONTROLLS USENAME IS NOT EMPTY
-		if (check.isEmpty()) {
-			User.validName = false;
-			JOptionPane.showMessageDialog(null, "Username cannot be empty", "Bad username", JOptionPane.ERROR_MESSAGE);
-		}
-
-		// CONTROLLS WHITESPACE
-		int length = check.length();
-		char[] x = check.toCharArray();
-		for (int i = 0; i < length; i++) {
-			if (x[i] == ' ') {
-				User.validName = false;
-				JOptionPane.showMessageDialog(null, "Username cannot contain spaces", "Bad username",
-						JOptionPane.ERROR_MESSAGE);
+	
+	/**
+	 * sends the message to the server
+	 */
+	private void sendMsgClicked() {
+		String message = this.getMessage();
+		if (!message.isEmpty()) {
+			try {
+				dos.writeUTF(userName + ": " + message);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
-		return User.validName;
+		this.emptyTextField();
+	}
+
+	/**
+	 * Turns off the programm
+	 */
+	private void disconnect() {
+		disconnectMsg(userName);
+		killConnection();
+		this.hideContentPane();
+		dispose();
+		System.exit(0);
+	}
+
+	
+	/**
+	 * Creates actionlisteners for ClientGUI
+	 */
+	private void createActionListeners() {
+
+		this.b_send.addActionListener((e) -> sendMsgClicked());
+		this.btnDc.addActionListener((e) -> disconnect());
+		this.tf_input.addActionListener(e -> sendMsgClicked());
+
 	}
 }

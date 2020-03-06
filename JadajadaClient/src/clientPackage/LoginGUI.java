@@ -20,13 +20,12 @@ public class LoginGUI extends JFrame {
 	private JLabel enterName;
 	private JLabel lblIp;
 	private JLabel lblPort;
-	public static JLabel error;
+	private static JLabel error;
 
 	// TEXTFIELD
-	public JTextField nameField;
-	public JTextField tf_ip;
-	public JTextField tf_name;
-	public JTextField tf_port;
+	private JTextField nameField;
+	private JTextField tf_ip;
+	private JTextField tf_port;
 
 	// BUTTON
 	private JButton login;
@@ -40,42 +39,54 @@ public class LoginGUI extends JFrame {
 	Font f3 = new Font(Font.DIALOG, Font.ITALIC, 12);
 	Font f4 = new Font(Font.DIALOG, Font.BOLD, 23);
 
-	// INT
-	public static int colorIndex = 0;
-
 	// COMBOBOX
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private JComboBox colorSelect = new JComboBox(colors);
-	
 
-	public LoginGUI() {
+	public LoginGUI(boolean flag) {
 
+//		if true, error message is shown in login window
+		
+		error.setVisible(flag);
+		
 		windowInit();
 		interfaceInit();
 		setVisible(true);
 	}
 
-	public void logInClicked() {
-		User.validName = true;
-		User.name = nameField.getText();
-		User.validName = Client.authenticate(User.name);
-		if(User.validName) {
-		Client.connected = true;
-		String ip = tf_ip.getText();
-		int port = Integer.parseInt(tf_port.getText());
-		colorIndex = storeColor();
-		JOptionPane.showMessageDialog(null, "Welcome " + User.name, "Logged In!", JOptionPane.INFORMATION_MESSAGE);
-		Client.logIn(ip, port, User.name);
-		dispose();
-		new Client();
+	/*
+	 * method for establishing connection
+	 */
+	private void logInClicked() {
+
+		String user = nameField.getText();
+//		Checks if the username is within parameters
+		boolean validName = authenticate(user);
+
+//		If username is valid, proceeds to attempt to connect
+		if (validName) {
+			String ip = tf_ip.getText();
+			int port = Integer.parseInt(tf_port.getText());
+			int colorIndex = storeColor();
+			JOptionPane.showMessageDialog(null, "Welcome " + user, "Logged In!", JOptionPane.INFORMATION_MESSAGE);
+			new Client(ip, port, user, colorIndex);
+			dispose();
+
 		}
 
+		nameField.setText(null);
 	}
 
-	public int storeColor() {
+	/*
+	 * returns index number for what theme has been selected
+	 */
+	private int storeColor() {
 		return colorSelect.getSelectedIndex();
 	}
 
+	/*
+	 * modifies the extended JFrame
+	 */
 	private void windowInit() {
 
 		// Title window configurations
@@ -87,6 +98,9 @@ public class LoginGUI extends JFrame {
 
 	}
 
+	/**
+	 * Adds functionality to extended JFrame
+	 */
 	private void interfaceInit() {
 
 		// MAIN TITLE
@@ -96,7 +110,7 @@ public class LoginGUI extends JFrame {
 		add(maintitle);
 
 		// UNDERTITLE
-		undertitle = new JLabel("Messanger application in DAT055 ");
+		undertitle = new JLabel("Messenger application in DAT055 ");
 		undertitle.setFont(f3);
 		undertitle.setBounds(40, 88, 300, 20);
 		add(undertitle);
@@ -119,11 +133,12 @@ public class LoginGUI extends JFrame {
 		lblIp.setFont(f2);
 		add(lblIp);
 
-		// IP TEXTFIELD
+		// IP TEXTFIELD 
 		tf_ip = new JTextField("64.227.46.227");
 		tf_ip.setBounds(90, 170, 90, 20);
-		tf_ip.setFont(f2);
-		tf_ip.addActionListener(e->logInClicked());
+		tf_ip.setFont(f2);		
+		tf_ip.addActionListener(e -> logInClicked());
+		//tf_ip.setEditable(false);
 		add(tf_ip);
 
 		// PORT LABEL
@@ -132,11 +147,12 @@ public class LoginGUI extends JFrame {
 		lblPort.setFont(f2);
 		add(lblPort);
 
-		// PORT TEXTFIELD
+		// PORT TEXTFIELD 
 		tf_port = new JTextField("2309");
 		tf_port.setBounds(90, 190, 90, 20);
 		tf_port.setFont(f2);
-		tf_port.addActionListener(e->logInClicked());
+		tf_port.addActionListener(e -> logInClicked());		
+		//tf_port.setEditable(false);
 		add(tf_port);
 
 		// LOGIN BUTTON
@@ -152,17 +168,55 @@ public class LoginGUI extends JFrame {
 		colorSelect.setBounds(90, 230, 90, 20);
 		colorSelect.setBackground(Color.LIGHT_GRAY);
 		add(colorSelect);
-		
+
 		// ERROR LABEL
 		error = new JLabel("Invalid Server");
-		error.setBounds(90,110,200,20);
+		error.setBounds(90, 110, 200, 20);
 		error.setForeground(Color.red);
 		add(error);
 		error.setVisible(false);
-		
 
 		// DECORATIONS
 		getContentPane().add(new DrawingComponent());
+	}
+
+	/**
+	 * checks for invalid username
+	 * 
+	 * @param string
+	 * @return
+	 */
+	private boolean authenticate(String string) {
+		// CONTROLLS USER IS NOT NAMED ADMIN
+		String check = string;
+		System.out.println(check);
+		boolean validName = true;
+		if (check.equalsIgnoreCase("ADMIN")) {
+			validName = false;
+			JOptionPane.showMessageDialog(null, "Cannot be named " + string, "Bad username", JOptionPane.ERROR_MESSAGE);
+		}
+
+		// CONTROLLS USENAME IS NOT EMPTY
+		if (check.isEmpty()) {
+			validName = false;
+			JOptionPane.showMessageDialog(null, "Username cannot be empty", "Bad username", JOptionPane.ERROR_MESSAGE);
+		}
+
+		// CONTROLLS WHITESPACE
+		int length = check.length();
+		char[] x = check.toCharArray();
+		for (int i = 0; i < length; i++) {
+			if (x[i] == ' ') {
+				validName = false;
+
+				JOptionPane.showMessageDialog(null, "Username cannot contain spaces", "Bad username",
+						JOptionPane.ERROR_MESSAGE);
+
+				break;
+			}
+		}
+
+		return validName;
 	}
 
 }
